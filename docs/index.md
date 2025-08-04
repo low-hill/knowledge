@@ -1,5 +1,5 @@
 ---
-HOME
+title: HOME
 ---
 ## System Design
 - [Event-Driven Architecture](Event-Driven-Architecture.html)
