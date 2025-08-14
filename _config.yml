@@ -29,10 +29,10 @@ hydejack:
   sidebar:
     enabled: true
     addons:
-      # - about
+      - about
       - toc
-      # - related_posts
-      # - tag_cloud
+      - related_posts
+      - tag_cloud
 
   list:
     show_excerpts: true
