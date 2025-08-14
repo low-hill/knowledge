@@ -37,14 +37,17 @@ jobs:
           bundler-cache: true
       - name: Install Jekyll and dependencies
         run: bundle install
+      # - name: Build with Jekyll
+      #   uses: actions/jekyll-build-pages@v1
+      #   with:
+      #     source: ./
+      #     destination: ./_site
       - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          # source: ./
-          source: ./docs
-          destination: ./_site
+        run: jekyll build --source ./docs --destination ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
 
 
   # Deployment job
