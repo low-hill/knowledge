@@ -5,7 +5,8 @@ url: "https://low-hill.github.io"
 
 markdown: kramdown
 
-remote_theme: hydecorp/hydejack@v9
+# remote_theme: hydecorp/hydejack@v9
+remote_theme: hydecorp/hydejack@v9.0.0-rc.6
 
 source: docs
 destination: _site
