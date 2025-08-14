@@ -43,7 +43,7 @@ jobs:
       #     source: ./
       #     destination: ./_site
       - name: Build with Jekyll
-        run: jekyll build --source ./docs --destination ./_site
+        run: bundle exec jekyll build --source ./docs --destination ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
