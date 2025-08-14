@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # 웹훅
 ## 1.  개요
 * 웹훅과 Asynchronous API 패턴은 시스템의 다양한 구성 요소 간 실시간 통신(real-time communication)을 가능 합니다.

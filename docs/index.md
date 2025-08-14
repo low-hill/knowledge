@@ -1,8 +1,9 @@
 ---
 title: HOME
+layout: default
 ---
 ## System Design
-- [Microservice Architecture](마이크로서비스-아키텍처의-4가지-복원력-패턴.html)
+- [Microservice Architecture](msa.html)
 - [MSA Resiliency patterns](마이크로서비스-아키텍처의-4가지-복원력-패턴.html)
 - [Saga Pattern](Saga-Pattern.html)
 - [Event-Driven Architecture](Event-Driven-Architecture.html)
@@ -21,7 +22,7 @@ title: HOME
 
 
 ## API & 비동기
-- [REST API Design](rest-api-design.md)
+- [REST API Design](rest-api-design.html)
 - [Webhooks & Asynchronous API](웹훅과-Asynchronous-API-패턴.html)
 
 ## Java & Spring
@@ -32,7 +33,7 @@ title: HOME
 - [Spring APO & Cache](Spring-AOP,-Cache.html)
 - [Spring Rest Doc](Spring-Rest-Doc.html)
 - [Spring Data JPA 성능 최적화](Spring-Data-JPA-성능-최적화.html) 
-- [Spring Boot에서 Tomcat 튜닝](https://github.com/low-hill/Knowledge/wiki/Spring-Boot%EC%97%90%EC%84%9C-Tomcat-%ED%8A%9C%EB%8B%9D)
+- [Spring Boot에서 Tomcat 튜닝](Spring-Boot에서-Tomcat-튜닝.html)
 
 ## Linux & Tools
 - [Linux Command](Linux-Command.html)
@@ -49,9 +50,9 @@ title: HOME
 ## Cloud & DevOps
 - [Serverless](Serverless.html)
 - [AWS NAT gateway](AWS-NAT-gateway.html)
-- [Mybatis](https://github.com/low-hill/Knowledge/wiki/mybatis)
-* [Docker 이미지 줄이기](Docker-image-99%는-비법.html)
-* [Nginx](Nginx.html)
+- [Mybatis](mybatis.html)
+- [Docker 이미지 줄이기](Docker-image.html)
+- [Nginx](Nginx.html)
 
 
 ## 프로젝트 & 기타

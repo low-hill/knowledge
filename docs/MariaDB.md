@@ -1,3 +1,6 @@
+---
+layout: default
+---
 ### 튜닝
 * /lib/systemd/system/mariadb.service
   * LimitNOFILE

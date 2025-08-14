@@ -1,3 +1,6 @@
+---
+layout: default
+---
 ### cache penetration
 Cache penetration 존재 하지 않는 데이터를 조회하는것을 뜻한다. storage layer에 존재하지 않는 데이터는 cache에 저장 되지 않기 때문에 non-existent 데이터가 발생하는데 데이터가 요청될 때마다 DB에서 조회하기에 캐싱의 의미를 잃게 된다. traffic이 많으면 DB에 부하가 걸리고 존재하지 않는 키로 악의적인 공격을 할 수 있다.
 #### Solution

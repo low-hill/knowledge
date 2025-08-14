@@ -1,0 +1,54 @@
+title: Sowing Thoughts on a Gentle Hill
+description: 지속적인 학습과 성장을 위한 개발자의 기술 노트입니다. 
+baseurl: "/knowledge"
+url: "https://low-hill.github.io"
+
+markdown: kramdown
+
+remote_theme: hydecorp/hydejack@v9
+
+source: docs
+destination: _site
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-include-cache
+
+hydejack:
+  theme: 
+    accent: '#4285F4'
+    font: sans-serif
+
+  content:
+    excerpt_separator: "<!--more-->"
+    excerpt_twitter_card: false
+
+  sidebar:
+    enabled: true
+    addons:
+      - about
+      - toc
+      - related_posts
+      - tag_cloud
+
+  list:
+    show_excerpts: true
+    show_categories: true
+    show_tags: true
+
+  kramdown:
+    syntax_highlighter: rouge
+    syntax_highlighter_opts:
+      block:
+        line_numbers: true
+
+# 기타 최적화
+highlighter: rouge
+lsi: false
+excerpt_separator: "<!--more-->"
+
+# 검색 엔진 최적화
+google_analytics:  # 구글 애널리틱스 ID (선택사항)

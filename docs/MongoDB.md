@@ -1,3 +1,6 @@
+---
+layout: default
+---
 ## MongoDB란?
 
 MongoDB는 **문서 지향(Document-Oriented)** 데이터베이스 시스템으로 JSON 형태의 데이터를 저장하고 관리합니다. 문서는 "field : value" 쌍으로 구성된 데이터 구조로 JSON 객체와 유사하며, value에는 다른 documents, arrays 및 문서의 배열(arrays of documents)을 포함할 수 있습니다.
@@ -58,7 +61,8 @@ MongoDB는 documents를 **Collection**에 저장합니다.
 > **성능 고려사항**: 일반적으로 TTL(Time To Live) 인덱스가 Capped Collection보다 더 나은 성능과 유연성을 제공합니다. 
 > Capped Collection은 쓰기 작업을 직렬화하므로 일반 컬렉션보다 동시 삽입, 업데이트, 삭제 성능이 떨어집니다. Capped Collection을 생성하기 전에 TTL 인덱스를 대신 사용할 수 있는지 고려해보세요.
 > 
-> **주요 사용 사례**: Capped Collection의 가장 일반적인 사용 사례는 로그 정보 저장입니다. 기업에서 발생하는 데이터들 중에는 로그 데이터처럼 일정한 기간 내에서만 저장, 관리할 필요가 있는 데이터들이 존재하는데, 이런 경우 Capped Collection을 적용하기에 효과적입니다. Capped Collection이 최대 크기에 도달하면 오래된 로그 항목이 새로운 항목으로 자동 덮어써집니다.
+> **주요 사용 사례**: Capped Collection의 가장 일반적인 사용 사례는 로그 정보 저장입니다. 기업에서 발생하는 데이터들 중에는 로그 데이터처럼 일정한 기간 내에서만 저장, 관리할 필요가 있는 데이터들이 존재하는데, 이런 경우 Capped Collection을 적용하기에 효과적입니다.
+> Capped Collection이 최대 크기에 도달하면 오래된 로그 항목이 새로운 항목으로 자동 덮어써집니다.
 
 ## Indexes (인덱스)
 
@@ -611,4 +615,4 @@ db.users.deleteMany({ createdAt: { $gte: new Date('2022-01-01') } })
 
 - [MongoDB 공식 메뉴얼](https://www.mongodb.com/docs/manual/introduction/)
 - [MongoDB Unique Indexes](https://www.mongodb.com/docs/manual/core/index-unique/)
-- 주종면 - 빅데이터 저장 및 분석을 위한 New NoSQL & mongoDB 
+- 주종면 - 빅데이터 저장 및 분석을 위한 New NoSQL & mongoDB

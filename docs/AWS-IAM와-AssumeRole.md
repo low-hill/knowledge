@@ -1,3 +1,9 @@
+---
+layout: default
+title: AWS IAM과 AssumeRole
+permalink: /aws-iam-assumerole/
+---
+
 ## IAM user란?
 
 

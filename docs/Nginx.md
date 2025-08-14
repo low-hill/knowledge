@@ -1,3 +1,6 @@
+---
+layout: default
+---
 ## Nginx port
 * Nginx는 default port 는 80이고, SSL secure connection은 443port에서 발생한다.
 
@@ -35,7 +38,7 @@ sudo ufw status
 ## Nginx configuration 설정
 
 `
-sudo vim /etc/nginx/sites-available/example.com
+sudo \bvim /etc/nginx/sites-available/example.com
 `
   * configuration 파일 내용은 하위와 같다.
 
@@ -165,4 +168,3 @@ gzip_vary on;
 [Nginx 튜닝](https://mp.weixin.qq.com/s/MnUDkRgfWX6f6amnSc3-qg)
 
 [nginx config](https://github.com/voku/CONFIG--nginx---php-fpm---mysql/blob/master/etc/nginx/nginx.conf)
-

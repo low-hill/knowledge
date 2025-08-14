@@ -1,3 +1,9 @@
+---
+layout: default
+title: AWS NAT Gateway
+permalink: /aws-nat-gateway/
+---
+
 ## NAT란?
 
 NAT(Network Address Translation)는 네트워크 주소 변환 기술로, 내부 네트워크의 사설 IP 주소를 공인 IP 주소로 변환하여 인터넷 통신을 가능하게 하는 중요한 메커니즘입니다. 

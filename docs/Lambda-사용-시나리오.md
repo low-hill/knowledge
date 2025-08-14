@@ -1,3 +1,6 @@
+---
+layout: default
+---
 ### 1. Filtering Collections
   
   Stream API와 Lambda 표현식을 사용하면 읽기 쉬운 간결한 코드로 컬렉션 순회 및 필터링이 가능하다.

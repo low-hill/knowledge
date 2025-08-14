@@ -1,3 +1,9 @@
+---
+layout: default
+title: System Design Algorithms
+permalink: /system-design-algorithms/
+---
+
 # System design에서 활용되는 Algorithm
 > Sliding Window, Two Pointers, Two Heaps, backtracking, Breadth-First Search (BFS), Depth-First Search (DFS), Topological Sort, Merge Intervals, Trie (Prefix Tree), Union-Find (Disjoint Set), Flood Fill, Segment Tree
 

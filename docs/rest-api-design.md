@@ -1,3 +1,6 @@
+---
+layout: default
+---
 # REST API 설계 베스트 프랙티스
 
 ## 서론

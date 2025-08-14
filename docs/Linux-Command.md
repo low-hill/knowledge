@@ -1,3 +1,6 @@
+---
+layout: default
+---
 ### dstat
 IO, CPU, Network의 정보를 통합해서 모니터링 할 수 있고, plugin을 통해서 기능 확장도 가능하다. 사용하려면 설치해야 한다.
 * `sudo api-get install dstat`
@@ -84,7 +87,7 @@ ls -ltr: 리눅스 폴더 및 파일을 날짜순으로 정렬
 ### ln -s /etc/log/file logfile – 파일 symbolic link 생성.
 ### touch newfile – 빈 파일 생성.
 ### cat > newfile – STDIN으로 입력된 내용이 file로 저장.
-### more filename – 파일 전체 내용을 한화면으로 확인 가능하여 space나 enter키로 다음 내용을 확인 한다. 용량 큰 파일이나 명령 실행결과를 순차적으로 확인 가능하다.
+### more filename – 파일 전체 내용을 한화면으로 확인 가능하여 space나 enter키로 다음 내용을 확인 한다. 용량 큰 파일이나 명령 실행결과를 순차적으로 확인 가능하다.
 ### head filename – 파일의 처음 10줄을 출력한다.
 ### tail filename – 파일의 마지막 10줄을 출력한다.
 ### gpg -c newfile – 파일을 gpg format으로 비밀번호를 사용하여 암호화하여 동일한 디렉터리에 저장합니다.
@@ -175,7 +178,7 @@ netstat -anp|grep 'TIME_WAIT'|wc -l
 `find /etc/ -name "searchargument"` – /etc 디렉토리에서 이름이 searchargument로 시작하는 파일을 찾는다
 `find /etc/ -size +50000k` – /etc 디렉토리에서 50000k보다 큰 파일을 찾는다
 
-### locate filename – file의 location을 표시
+### locate filename – file의 location을 표시
 
 
 ### network connection 상태 확인

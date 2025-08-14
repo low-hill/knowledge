@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # Object Storage (BLOB)란 무엇인가?
 
 Object Storage, 또는 BLOB (Binary Large Object) 저장소는 방대한 비정형 데이터를 효율적으로 저장하고 관리하도록 설계된 스토리지 유형입니다. 

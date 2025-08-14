@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 * 신뢰도가 높은 document를 생성해주는 RESTful 서비스의 문서화 도구. 기본적으로 Asciidoctor를 사용하여 HTML를 생성한다. 필요 한 경우 Markdown을 사용하도록 변경할 수 있다.
 
 ### 장점

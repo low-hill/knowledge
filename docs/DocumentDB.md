@@ -1,3 +1,6 @@
+---
+layout: default
+---
 ## DocumentDB 개요
 Amazon DocumentDB는 MongoDB와 대부분 호환되는, 완전 관리형 native JSON document 데이터베이스입니다.      
 MongoDB의 일부 기능은 지원하지 않지만, 기본적인 보안, 백업, 확장성, 장애 복구 등이 기본 제공되는 관리형 데이터베이스 서비스이기 때문에 사용자는 많은 운영 부담에서 벗어날 수 있습니다.

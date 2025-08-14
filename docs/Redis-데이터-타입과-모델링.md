@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # Redis 데이터 타입
 
 ## 개요

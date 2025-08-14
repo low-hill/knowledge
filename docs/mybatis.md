@@ -1,3 +1,6 @@
+---
+layout: default
+---
 # mybatis
 
 ##  Dynamic SQL
@@ -233,5 +236,5 @@ try{
 ```
 
 ##### Reference
-* [https://mybatis.org/mybatis-3/ko/sqlmap-xml.html]
-* https://github.com/mybatis/mybatis-3/wiki/FAQ#how-do-i-code-a-batch-insert
+* [https://mybatis.org/mybatis-3/]
+* [https://github.com/mybatis/mybatis-3/wiki/FAQ#how-do-i-code-a-batch-insert]
