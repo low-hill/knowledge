@@ -28,6 +28,7 @@ layout: default
 ## Java & Spring
 
 - [JVM](JVM.html)
+- [효율적인 Java 코드를 위한 성능 최적화](java-performance-optimization.html)
 - [Lambda 사용 시나리오](Lambda-사용-시나리오.html)
 - [Querydsl](Querydsl.html)
 - [Spring APO & Cache](Spring-AOP,-Cache.html)
