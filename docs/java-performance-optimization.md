@@ -158,13 +158,31 @@ List<User> first10Users = userService.getUsers(0, 10);
 
 주요 GC 방식:
 
+| GC 유형 | 동작 특징 | JVM 옵션 |
+|---------|-----------|----------|
+| **Serial GC** | 단일 스레드로 모든 GC 작업을 수행해 통신 오버헤드가 없으며 소형 힙 환경에 최적 | `-XX:+UseSerialGC` |
+| **Parallel GC** | 여러 스레드가 동시에 수집을 수행해 처리량(throughput)을 극대화하는 병렬 generational collector | `-XX:+UseParallelGC` |
+| **G1 GC** | 애플리케이션과 GC 단계를 병행 수행하면서 소규모 환경부터 대형 멀티코어 서버까지 확장되고, 높은 처리량과 짧은 정지 시간을 유지하도록 설계된 collector | `-XX:+UseG1GC` |
+| **ZGC** | 대부분의 GC 작업을 애플리케이션과 동시 수행하고 짧은 정지 시간을 유지하는 저지연 collector | `-XX:+UseZGC` |
+| **Shenandoah** | 힙 전 범위를 동시(compacting) 수집해 서브-밀리초 정지 시간을 목표로 하는 저지연 collector | `-XX:+UseShenandoahGC` |
 
-| GC 유형 | 설명 | 사용 사례 | JVM 옵션 |
-|---------|------|-----------|----------|
-| **Serial GC** | 단일 스레드로 동작 | 작은 애플리케이션, 단일 코어 환경 | `-XX:+UseSerialGC` |
-| **Parallel GC** | 멀티스레드로 동작 | 처리량(Throughput) 최적화 | `-XX:+UseParallelGC` |
-| **G1 GC** | 대용량 힙 메모리 최적화 | 대용량 힙이 필요한 애플리케이션 | `-XX:+UseG1GC` |
-| **ZGC** | 지연시간 최소화 | 대용량 힙 + 낮은 지연 시간이 필요한 애플리케이션 | `-XX:+UseZGC` |
+### GC 선택 시 고려사항
+
+- **Serial GC**
+  - 약 100MB 이하의 소형 데이터셋을 사용하는 애플리케이션에 적합합니다. 긴 정지 시간을 허용할 수 있을 때 선택합니다. 
+- **Parallel GC**: 처리량(throughput)이 지연(latency)보다 중요할 때 최선의 선택으로, 긴 일시 정지를 허용하는 bulk 데이터 처리나 batch 작업에 적합합니다. 
+  - Serial GC와 유사한 generational GC지만, 여러 스레드로 GC를 가속화합니다. 
+  - 최고 처리량을 목표로 1초 이상의 일시 정지를 허용할 수 있는 중~대형 데이터셋의 멀티프로세서/멀티스레드 애플리케이션에 사용합니다.
+- **G1 GC**: 응답 시간이 전체 처리량보다 중요하고 GC 일시 정지 시간을 더 짧게 유지해야 하는 대용량 힙 애플리케이션에서 선택합니다. 
+  - **적합한 애플리케이션 기준:**
+    - 6GB 이상의 대형 힙(50% 이상 live objects).
+    - 불규칙한 워크로드.
+    - 일시 정지를 몇 백 밀리초로 제한해야 하는 애플리케이션
+- **ZGC**
+  - 응답 시간이 최우선이거나 멀티 테라바이트 규모 힙을 사용하는 애플리케이션에서 선택합니다.
+  - ZGC는 10ms 미만의 정지 시간을 목표로 합니다.
+- **Shenandoah GC**
+  - 낮은 지연시간과 짧은 일시 정지 시간이 필요한 애플리케이션에 적합하며, 힙 크기와 무관합니다.
 
 ------------------------------------------------------------------------
 
@@ -234,4 +252,5 @@ for (int i = 0; i < 1000; i++) {
 
 -   [Why Your Java Code Is Slow --- And 13 Tricks Seniors Use to Fix
     It](https://blog.stackademic.com/why-your-java-code-is-slow-and-13-tricks-seniors-use-to-fix-it-5eb54a0ef74d)
--   [Java Official Documentation](https://docs.oracle.com/javase/)
+-   [https://docs.oracle.com/javase/](https://docs.oracle.com/en/java/javase/11/gctuning/available-collectors.html)
+-   [How to choose the best Java garbage collector](https://developers.redhat.com/articles/2021/11/02/how-choose-best-java-garbage-collector#)
