@@ -43,54 +43,44 @@ public class Author {
 ```
 
 
-## 2. Fetch 전략
+## 2. Fetch 전략과 N+1 문제
 
-Fetch 전략은 엔티티를 조회할 때 연관관계에 매핑되어 있는 엔티티를 데이터베이스에서 값을 가져오는 방식으로 EAGER(즉시로딩), LAZY(지연로딩) 2가지 전략이 있다.
-* 즉시 로딩: 엔티티를 조회할 때 연관된 엔티티도 함께 조회
-* 지연 로딩: 연관된 엔티티를 실제 사용할 때 조회
+JPA에서 연관 엔티티를 조회할 때 중요한 성능 문제 중 하나가 N+1 문제입니다.
+N+1 문제는 부모 엔티티를 조회하는 쿼리 1번 + 각 부모 엔티티마다 자식 엔티티를 조회하는 쿼리 N번이 실행되어 총 N+1번 쿼리가 발생하는 현상입니다.
 
+## N+1 문제 해결 방법
 Fetch 전략을 통한 최적화 시 아래와 같은 상황을 고려할 수 있다.
 * 연관관계에 매핑되어 있는 엔티티의 불필요한 로드를 방지하려면 적절한 Fetch 전략을 선택해야 한다.
-* JPQL에서 성능 최적화를 위해 제공하는 JOIN FETCH 절을 사용하여 연관된 엔티티를 한 번의 쿼리로 효율적으로 로드 할 수 있다.
+* 성능 최적화를 위해 연관된 엔티티를 한 번의 쿼리로 효율적으로 로드 할 수 있다.
 
-Author와 Book이라는 두 엔티티를 예로 Fetch 전략을 설정하는 방법은 다음과 같다.
+JPA/Hibernate에서는 N+1 문제를 해결하거나 완화하기 위해 여러 Fetch 전략을 제공합니다.
+
+### Fetch Join (JPQL/HQL)
+Fetch Join은 동적 쿼리에서 JOIN FETCH를 사용해 관련 데이터를 메인 쿼리에서 함께 조회하는 방법이다.
+* 조회 시점에 JOIN FETCH를 사용해 연관 엔티티를 한 번에 가져옴
+* to-one 연관 관계는 안전하게 동시에 fetch join 가능
+```
+List<Author> authors = em.createQuery(
+    "select a from Author a join fetch a.books", Author.class)
+    .getResultList();
+```
+> [!IMPORTANT] 
+> Fetch Join 사용 시 주의 사항
+* 컬렉션(to-many) 관계를 동시에 fetch join하면
+→ 데이터베이스에서 카테시안 곱이 발생하여 성능이 크게 저하될 수 있음
+* fetch join 대상에 WHERE 절 제한을 적용하면 컬렉션이 불완전하게 조회될 수 있음
+* 페이지네이션/제한 쿼리(setFirstResult / setMaxResults, LIMIT / OFFSET)에서는 fetch join 사용 금지
+
+### EntityGraph
+EntityGraph를 사용하면 JPQL을 수정하지 않고도 조회 시점에 필요한 연관 데이터를 함께 로딩하도록 지정할 수 있다.
 
 ```
-@Entity
-public class Author {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
-
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY) // Lazy fetch strategy
-    private List<Book> books = new ArrayList<>();
-
-    // getters and setters
-}
-
-@Entity
-public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String title;
-
-    @ManyToOne(fetch = FetchType.EAGER) // Eager fetch strategy
-    @JoinColumn(name = "author_id")
-    private Author author;
-
-    // getters and setters
-}
+@EntityGraph(attributePaths = {"books", "author"})
+List<Author> findAllWithBooks();
 ```
 
-Author 엔티티는 Book 엔티티와 일대다(OnetoMany) 관계를 갖고 있고 Book 컬렉션에 대해 지연 로딩으로 설정 되어 Author를 가져올 때 Book컬렉션은 코드에서 실제로 액세스할 때까지 로드되지 않는다.
-Book 엔터티는 Author 엔터티와 다대일(ManyToOne) 관계를 갖고 있고 Author 필드에 대해 즉시 로딩으로 설정 되어 책 정보 가져올 때 관련 저자를 즉시 ​​가져 온다.
 
-
-## 3. Batch fetching
+### Batch fetching
 
 Batch fetching은 ToMany 관계의 조인에서는 오직 필요한 정보만 조회되도록 쿼리를 최적화하는 데 사용되는 기술로, 연관관계에 매핑되어 있는 엔티티를 로드할 때 수행되는 개별 데이터베이스 쿼리 수를 줄여 성능을 향상시키고 N+1 쿼리 문제를 최소화한다.
 
@@ -135,7 +125,7 @@ public class Order {
 }
 ```
 
-## 4. Caching
+## 3. Caching
 
 캐싱은 데이터베이스 접근 횟수를 줄여 애플리케이션 성능을 크게 개선할 수 있다.
 
@@ -174,7 +164,7 @@ public class ProductService {
 }
 ```
  
-## 5.쿼리 최적화
+## 4.쿼리 최적화
 
 쿼리 최적화로 데이터베이스 부하를 최소화하고 응답 시간이 더 빨라지도록 한다.
 
@@ -193,7 +183,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 }
 ```
 
-## 6. Pagination과 정렬
+## 5. Pagination과 정렬
 
 페이징 및 정렬을 사용하면 대량의 데이터를 처리할 때 애플리케이션의 성능이 향상될 수 있다. 데이터베이스 전체를 조회하는 대신 조회 결과 수를 제한하고 특정 기준에 따라 정렬하면 데이터베이스에서 처리하고 반환해야 하는 데이터의 양을 줄여 응답 시간을 단축하고 성능을 향상시킬 수 있다.
 
@@ -214,7 +204,7 @@ public Page<Product> findProducts(String keyword, Pageable pageable) {
 }
 ```
 
-## 7. @Transactional(readOnly = true)
+## 6. @Transactional(readOnly = true)
 
 @Transactional(readOnly = true)를 사용하면 불필요한 데이터 변경(등록, 수정, 삭제)을 예방할 수 있고 성능을 최적화 할 수 있다.
   * 영속성 컨텍스트가 변경 감지를 위한 Snapshot을 따로 저장하지 않아 메모리 절약 및 성능 향상
@@ -234,7 +224,7 @@ public class OrderService {
 }
 ```
 
-## 8. Batch 처리
+## 7. Batch 처리
 
 Use batch processing for bulk inserts, updates, and deletes. Spring Data JPA supports batch operations through the saveAll() and deleteAllInBatch() methods.
 
@@ -254,3 +244,4 @@ public class OrderService {
 
 Reference
 * https://medium.com/@avi.singh.iit01/optimizing-performance-with-spring-data-jpa-85583362cf3a
+* https://medium.com/@harrymarkjava/this-one-java-optimization-cut-our-api-response-time-by-90-2eaefadf663e
