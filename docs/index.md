@@ -8,6 +8,7 @@ layout: default
 - [Saga Pattern](Saga-Pattern.html)
 - [Event-Driven Architecture](Event-Driven-Architecture.html)
 - [Object Storage](시스템-설계를-위한-가이드-‐-Object-Storage-(BLOB)편.html)
+- [Kafka 분산 시스템 설계: 파티셔닝, 복제](kafka-deepdive.html)
 
 ## 소프트웨어 개발원칙
 - [소프트웨어 개발 원칙](소프트웨어-개발-원칙.html)
