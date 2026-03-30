@@ -111,28 +111,36 @@ Event Loop Thread가 블로킹되면 전체 이벤트 처리에 영향을 주므
 
 ---
 ## 핵심 개념 3: Blocking 작업 처리 (executeBlocking / Worker)
-Blocking 작업은 “없애거나”, “격리하거나” 둘 중 하나입니다.  
-Vert.x에서 Non-blocking을 지키는 핵심은 **Event Loop에서는 절대 오래 걸리는 작업을 수행하지 않는 것**이고, 불가피하다면 **Worker로 격리**하는 것입니다.
-### Blocking 작업이 위험한 이유 (Event Loop stall)
-Event Loop는 “이벤트를 빠르게 처리하고 다음 이벤트로 넘어가는 것”이 목적입니다.  
-여기서 블로킹이 발생하면 해당 Event Loop 스레드가 맡은 모든 요청/타이머/EventBus 메시지가 동시에 지연됩니다.
-- **증상**
-  - p99 latency 급증
-  - 타임아웃 증가 → 재시도 폭증 → 더 큰 부하(눈덩이)
-  - BlockedThreadChecker 경고 로그
-### 선택지 A: executeBlocking (공용 Worker Pool)
-짧은 블로킹 작업을 “공용 worker pool”로 넘겨 처리합니다.
-- 예) 호출 시간이 짧고(짧은 DB 조회 등) 호출 빈도/동시성이 과하지 않을 때
-- **장점**
-  - 적용이 쉽고, 점진적으로 non-blocking 구조로 전환할 때 유용
-- **주의 사항**
-  - 공용 풀을 잠식하면 전체 시스템이 같이 느려질 수 있음
+Vert.x에서 Non-blocking을 유지하는 핵심 원칙은:
+
+> Event Loop에서는 절대 오래 걸리는 작업을 수행하지 않는다.
+
+불가피한 Blocking 작업은 "**격리**"를 통해 Event Loop에 영향을 주지 않도록 해야 합니다.
+
+### Blocking 작업이 위험한 이유 (Event Loop Block)
+Event Loop의 목적은 이벤트를 빠르게 처리하고 다음 이벤트로 넘어가는 것입니다.
+여기서 블로킹이 발생하면:
+- 해당 Event Loop Thread가 맡은 모든 요청/타이머/EventBus 메시지가 동시에 지연
+- 시스템 성능 저하 → p99 latency 급증
+- 타임아웃 증가 → 재시도 폭증 → 부하 눈덩이 효과
+- BlockedThreadChecker 경고 로그 발생
+
+### 선택지 A: executeBlocking (공통 Worker Pool)
+불가피한 짧은 Blocking 작업은 Vert.x 인스턴스가 관리하는 공통 Worker Pool에서 실행되도록 처리할 수 있습니다.
+- executeBlocking에서 수행되는 작업은 Worker Pool에서 실행되고,
+- 작업 완료 후 결과 콜백(onSuccess/onFailure)은 원래 Event Loop 컨텍스트에서 실행됩니다.
+
+✔️ 특징
+- 적용이 쉽고, 점진적으로 Non-blocking 구조로 전환할 때 유용
+- 호출 시간이 짧고(예: 짧은 DB 조회), 호출 빈도가 적정 수준일 때 적합
+
+🔹 예시
 ```java
 vertx.executeBlocking(() -> {
   // 여기서는 블로킹 작업 허용 (예: JDBC, 파일 I/O 등)
   return blockingCall();
 }, false)
-  // onSuccess/onFailure는 원래 컨텍스트(event loop)로 돌아와 실행됨
+  // 결과 콜백은 Event Loop 컨텍스트에서 실행
   .onSuccess(result -> {
     // 다음 비동기 로직...
   })
@@ -141,12 +149,25 @@ vertx.executeBlocking(() -> {
   });
 ```
 
+⚠️ 주의 사항
+- 공통 Worker Pool을 과도하게 점유하면 전체시스템 응답성이 저하될 수 있음
+- 호출 시간이 짧고, 동시성/빈도가 높지 않은 작업에 적합
+
 ### 선택지 B: Worker Verticle (전용 Worker Pool)
-무겁거나 오래 걸리는 작업(CPU-heavy/긴 I/O)은 전용 worker pool로 **격리**하는 편이 안전합니다.
-- 예) 암호화/압축/대량 변환처럼 CPU 점유가 큰 작업
-- 주의 사항
-  - worker pool도 자원이며 무한하지 않습니다.
+무겁거나 오래 걸리는 작업은 전용 Worker Pool에서 실행되는 Worker Verticle로 격리하는 것이 안전합니다.
+- Worker Verticle에서 수행되는 작업은 Worker Thread에서 실행되며,
+- 작업 완료 후 자동으로 원래 Event Loop 컨텍스트로 돌아오지 않습니다.
+- 필요하면 Event Bus나 runOnContext를 통해 명시적으로 Event Loop로 결과 전달해야 합니다.
+
+✔️ 특징
+- CPU 점유가 큰 작업에 적합
+  - 암호화 / 압축 / 대량 데이터 변환
+  - 복잡한 이미지 처리
+
+⚠️ 주의 사항
+  - Worker Pool도 제한된 자원이며, 무한하지 않음
   - pool size를 키우면 throughput이 늘 수 있지만, 과하면 컨텍스트 스위칭/경합으로 역효과가 날 수 있음
+  - CPU/메모리 자원 상황에 맞게 적절히 설정 필요
 ---
 ## 핵심 개념 4: Event Bus (Verticle 간 메시징)
 EventBus는 Verticle 간 통신을 위한 고속 인메모리 메시징 시스템입니다. 
