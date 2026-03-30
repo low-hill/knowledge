@@ -76,19 +76,39 @@ Verticle을 통해 “반응형(reactive)” 애플리케이션 구조가 명확
 
 ## 핵심 개념 2: Event Loop (Non-blocking의 중심)
 ### Event Loop 란?
-   Vert.x의 이벤트 루프는 초고속 작업자(worker)와 같습니다. 요청, 타이머, 메시지 등 처리할 일이 생기면 즉시 대응합니다.
+   Vert.x에서 Event Loop는 이벤트 기반(Event-driven) 실행 모델의 핵심 구성 요소로,
+   이벤트를 큐에서 가져와 등록된 핸들러(handler)에 디스패치하는 역할을 합니다.
 
-이벤트 루프 스레드는 항상 논블로킹으로 동작해야 하며, 빠르게 작업을 끝내고 다음 이벤트를 처리합니다.
+이 구조는 Reactor Pattern에 기반한 이벤트 처리 모델입니다.
 
-예를 들어 CPU 코어가 4개라면 (기본 설정 기준으로) 8개의 이벤트 루프 스레드가 생성될 수 있으며, 이를 통해 효율적인 동시성을 제공합니다.
+### Event Loop Thread
+각 Event Loop는 하나의 전용 스레드에서 실행됩니다.
+이 스레드를 Event Loop Thread라고 하며, 각 Event Loop와 1:1로 매핑됩니다.
+해당 스레드에서 단일 스레드 방식으로 이벤트를 순차적으로 처리합니다.
 
-#### Event Loop에서 하면 안 되는 것(대표 예시):
-- 동기 DB 접근(JDBC)
-- 동기 HTTP 호출(블로킹 클라이언트)
-- 파일 I/O를 그대로 수행
-- `Thread.sleep`
-- 큰 JSON 직렬화/압축/암호화 같은 오래 걸리는 CPU 작업
-Event Loop에서 이런 작업을 하면, 그 순간부터는 “비동기”처럼 보여도 실제로는 **Non-blocking이 깨진 상태**가 됩니다.
+* Vert.x는 일반적으로 ` CPU 코어 수 × 2` 개수만큼 Event Loop Thread를 생성합니다.
+  - 예를 들어 CPU 코어가 4개라면 약 8개의 Event Loop 스레드가 생성됩니다.
+* 이를 통해 **소수의 스레드로 높은 동시성**을 효율적으로 처리할 수 있습니다.
+* 단, 각 Event Loop는 단일 스레드에서 동작하며, 전체적으로는 여러 Event Loop를 통해 동시성을 제공합니다.
+
+#### Event Loop에서 하면 안 되는 작업 (대표 예시):
+Event Loop Thread가 블로킹되면 전체 이벤트 처리에 영향을 주므로 다음 작업은 피해야 합니다:
+- 블로킹 I/O
+  - 동기 DB 접근 (JDBC)
+  - 동기 HTTP 호출 (블로킹 클라이언트)
+  - 파일 I/O 직접 수행
+
+- 명시적 블로킹
+  - `Thread.sleep()`
+  - 락 대기 (`synchronized`, `wait` 등)
+
+- 오래 걸리는 CPU 작업
+  - 대용량 JSON 직렬화 / 파싱
+  - 압축, 암호화
+  - 이미지 처리 등
+
+> 이러한 작업은 Event Loop Thread를 블로킹시켜, 다른 이벤트 처리를 지연시키고 전체 시스템의 응답성을 저하시킵니다.
+
 ---
 ## 핵심 개념 3: Blocking 작업 처리 (executeBlocking / Worker)
 Blocking 작업은 “없애거나”, “격리하거나” 둘 중 하나입니다.  
