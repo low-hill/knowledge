@@ -170,22 +170,58 @@ vertx.executeBlocking(() -> {
   - CPU/메모리 자원 상황에 맞게 적절히 설정 필요
 ---
 ## 핵심 개념 4: Event Bus (Verticle 간 메시징)
-EventBus는 Verticle 간 통신을 위한 고속 인메모리 메시징 시스템입니다. 
-로컬(JVM 내부)에서 매우 빠르게 동작하며, 클러스터 환경에서는 JVM을 넘어 네트워크를 통해 다른 노드의 Verticle과도 메시지를 주고받을 수 있고 아래와 같은 3가지 메시징 패턴을 제공합니다.
-- **Publish/Subscribe**
-  - 모든 구독자에게 브로드캐스트
-- **Point-to-Point**
-  - 특정 주소의 한 소비자에게만 메시지 전달.
-- **Request/Reply**
-  - 요청-응답 패턴으로 결과를 반환.
+Vert.x Event Bus는 서로 다른 Verticle 또는 서비스 구성 요소 간에 느슨하게 결합된 통신을 가능하게 해주는 경량 분산 메시징 시스템입니다.
 
-Event Bus를 사용할 때는 아래를 같이 고려하는 게 실무적으로 중요합니다.
-- **Timeout**
-  - request/reply는 타임아웃을 두지 않으면 장애 시 대기가 누적될 수 있음
+메시지는 문자열 기반의 address를 통해 라우팅되며, 동일 JVM 내부에서는 고속의 in-memory 방식으로, 클러스터 환경에서는 네트워크를 통해 노드 간 전달됩니다.
+
+또한 Event Bus는 다음 세 가지 메시징 패턴을 지원합니다.
+
+- publish-subscribe
+- point-to-point
+- request-reply
+
+이때 전달되는 메시지는 기본적으로 best-effort(최선 노력) 방식으로 처리됩니다.
+즉, 일부 메시지가 유실될 수 있으며, 내구성을 제공하지 않는다는 점이 중요한 특징입니다.
+
+### 메시지 전달 패턴
+Event Bus는 메시지를 전달하는 세 가지 방식을 제공합니다.
+
+#### Publish/Subscribe
+Publish/Subscribe 패턴은 특정 address에 메시지를 발행하면, 해당 address를 구독하고 있는 모든 consumer에게 메시지를 전달하는 브로드캐스트 방식입니다.
+
+**특징**
+- 동일 이벤트를 여러 consumer가 동시에 수신 가능
+- 여러 consumer가 동시에 처리하는 구조이므로 순서가 보장되지 않을 수 있음
+
+#### Point-to-Point
+Point-to-Point 패턴은 특정 address에 등록된 하나의 consumer에게 메시지를 전달합니다.
+
+만약 여러 consumer가 등록되어 있다면, Event Bus는 round-robin 방식으로 메시지를 분산 처리합니다.
+
+**특징**
+- 한 메시지는 단일 consumer만 처리
+- 여러 consumer가 있는 경우 round-robin으로 분산 처리되어 순서가 보장되지 않을 수 있음
+
+### Request/Reply
+Request/Reply 패턴은 메시지를 보내고, consumer가 처리한 결과를 다시 응답으로 받는 비동기 RPC 스타일 통신 방식입니다.
+
+Event Bus는 내부적으로 reply address를 생성하여 요청-응답 흐름을 자동으로 연결합니다.
+
+**특징**
+- 단일 consumer가 순차적으로 처리하는 경우에만 순서가 유지됨
+- 응답 기반 구조 → 타임아웃 설정 필수
+
+### 메시지 전달 시 고려사항
+세 가지 패턴 모두 메시지를 전달할 때 몇 가지 공통 특성과 주의점이 있습니다.
+- **메시지 순서**
+  - 단일 sender → 단일 consumer의 경우만 FIFO 순서 보장
+  - 다중 consumer, 클러스터 환경에서는 순서 보장 불가
 - **Failure 설계**
-  - 소비자 실패 시 어떤 에러를 돌려줄지, 재시도는 어디에서 할지
+  - Event Bus는 재시도/보장 메커니즘이 없기 때문에, 소비자 실패 시 에러 처리 방식과 재시도 전략을 별도로 설계해야 함
 - **직렬화 비용**
-  - 객체를 JSON으로 변환해 보내면 직렬화/역직렬화 비용이 병목이 될 수 있음
+  - 객체를 JSON으로 변환해 보내면 직렬화/역직렬화 비용이 병목이 될 수 있음(대량 트래픽 시 Custom Codec 권장)
+- **Back Pressure 부재**
+  - producer 속도를 제한하지 않음 → 빠른 producer + 느린 consumer 조합 시 메모리 증가 및 OOM 위험
 ---
 ## Backpressure(흐름 제어) 감각
 높은 동시성 시스템은 “받는 속도 > 처리 속도”가 되는 순간 쉽게 무너집니다.  
