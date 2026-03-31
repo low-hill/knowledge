@@ -1,3 +1,8 @@
+---
+title: Vert.x
+layout: default
+---
+
 ## 🚀 Vert.x 란?
 Vert.x는 JVM 기반의 **비동기(Asynchronous), 이벤트 기반(Event-driven), Non-blocking** 애플리케이션을 만들기 위한 툴킷입니다. “스레드를 요청마다 늘리는 방식” 대신, **Event Loop + 콜백(핸들러) + 메시지 패싱**을 통해 높은 동시성을 달성하는 모델을 제공한다는 점입니다.
 Java, Kotlin, Groovy 등 다양한 언어를 지원해 개발자 친화적이며, 멀티 리액터(Multi-Reactor) 패턴을 통해 고성능 병렬 처리를 가능하게 합니다.
@@ -115,16 +120,6 @@ Event Bus를 사용할 때는 아래를 같이 고려하는 게 실무적으로 
 - **직렬화 비용**
   - 객체를 JSON으로 변환해 보내면 직렬화/역직렬화 비용이 병목이 될 수 있음
 ---
-## Backpressure(흐름 제어) 감각
-높은 동시성 시스템은 “받는 속도 > 처리 속도”가 되는 순간 쉽게 무너집니다.  
-Vert.x에서 backpressure는 “이벤트 루프를 빠르게 유지하기 위한 안전장치”에 가깝습니다.
-- 생산자가 너무 빨라지면 큐가 차고
-- 큐가 차면 지연이 증가하고
-- 결국 타임아웃/메모리 급증/장애로 이어질 수 있습니다.
-Vert.x에서의 흐름 제어 포인트(개념)
-- HTTP 응답을 큰 payload로 한 번에 쓰기보다 스트리밍/청크 전송 고려
-- DB 대용량 조회는 RowStream/cursor 기반 streaming으로 소비 속도에 맞춰 fetch
----
 
 운영 이슈와 실무 튜닝은 아래 문서에 정리했습니다.  
-- [Vert.x Troubleshooting](vertx_troubleshooting.md)
+- [Vert.x Troubleshooting](vertx_troubleshooting.html)
