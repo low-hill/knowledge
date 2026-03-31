@@ -214,12 +214,16 @@ vertx.eventBus().send("local.addr", myInstance);
 
 ## 6. 고성능 DB 처리를 위한 Reactive 패턴 (Client, Streaming, Composition)
 
-DB 연동은 백엔드 시스템의 가장 큰 병목 구간입니다. Vert.x에서는 이 구간을 **"어떤 클라이언트로, 어떻게 데이터를 가져와서, 어떻게 조립하느냐"**가 성능을 좌우합니다.
+DB 연동은 백엔드 시스템의 가장 큰 병목 구간입니다. Vert.x 환경에서는 이 구간을 **"어떤 클라이언트로, 어떻게 데이터를 가져와서, 어떻게 조립하느냐"**가 시스템 성능을 좌우합니다.
+
 
 ### A. Client 선택: "무늬만 비동기" 탈출하기
+기존 JDBC 드라이버를 executeBlocking으로 감싸서 사용하는 방식은 엄밀히 말해 '비동기'처럼 보일 뿐, 내부적으로는 여전히 Worker Thread를 점유하며 대기하는 구조입니다. 이는 트래픽 급증 시 스레드 풀 고갈을 초래하는 임시방편에 가깝습니다.
 
-Legacy 시스템의 JDBC 드라이버를 `executeBlocking`으로 감싸서 쓰는 것은, 결국 Worker Thread를 잠식하는 임시방편일 뿐입니다.
-가능하다면 **Reactive SQL Client**(MySQL, PgClient 등)를 도입하세요. I/O 처리까지 Event Loop 내에서 Non-blocking으로 처리되므로, 적은 리소스로 JDBC 대비 월등한 처리량을 확보할 수 있습니다.
+진정한 고성능을 원한다면 **Reactive SQL Client**(MySQL, PgClient 등)를 적용해야 합니다.
+- **완전한 Non-blocking I/O**: 쿼리 실행부터 결과 수신까지 모든 과정이 Event Loop 내에서 처리되어 컨텍스트 스위칭 비용이 거의 없습니다.
+- **리소스 효율 극대화**: 수천 개의 동시 연결도 적은 수의 이벤트 루프 스레드만으로 가볍게 소화하며, JDBC 대비 월등한 처리량(Throughput)을 확보할 수 있습니다.
+
 
 ### B. 메모리 관리: `RowStream`을 통한 Backpressure
 
@@ -255,34 +259,38 @@ connection
 
 ### C. 흐름 제어: `Future` Composition으로 콜백 지옥 제거
 
-Reactive Client 사용 시 가장 주의할 점은 "콜백 지옥"입니다. Vert.x 4의 강력한 **Future API**를 사용하여 비즈니스 로직을 구조적으로 표현해야 합니다.
+Reactive Client 사용 시 가장 주의할 점은 "콜백 지옥"입니다. Vert.x 4의 강력한 **Future API**를 사용하여 비즈니스 로직을 구조적으로 표현할 수 있습니다.
 
 * **병렬 조립 (Scatter-Gather)**: `Future.all`
-  * 독립적인 두 테이블(User, Order)을 동시에 조회하여 응답 속도 단축.
+  * 서로 독립적인 여러 작업을 동시에 실행하여 전체 응답 시간을 단축할 때 유용합니다. (예: 주문 내역과 포인트 정보를 동시에 조회)
 * **순차 연결 (Chaining)**: `compose`
-  * 앞선 쿼리 결과(UserID)를 받아 다음 쿼리(UserDetail)를 실행하는 의존성 처리.
+  * 앞선 작업의 결과물을 받아 다음 작업을 수행해야 하는 의존성 처리에 사용합니다. (예: 사용자 조회 후 ID 기반 상세 정보 조회)
+
+#### 실전 코드 예시
+아래는 사용자 정보를 조회한 뒤, 해당 사용자의 주문 내역과 포인트 정보를 병렬로 가져오는 비즈니스 로직을 Future API로 구현한 예시입니다.
 
 ```java
 // 예시: 유저 조회 후 -> 주문 내역 병렬 조회
-client.query("SELECT id FROM users WHERE name='kim'").execute()
-    .compose(rows -> {
-        Long id = rows.iterator().next().getLong("id");
-        // 주문과 포인트 정보를 동시에(병렬) 조회
-        return Future.all(
-            client.query("SELECT * FROM orders WHERE uid=" + id).execute(),
-            client.query("SELECT * FROM points WHERE uid=" + id).execute()
-        );
-    })
-    .onSuccess(composite -> { /* 결과 조합 */ });
+
+client.preparedQuery("SELECT id FROM users WHERE name = $1").execute(Tuple.of("kim"))
+    .map(rows -> rows.iterator().next().getLong("id")) // ID 추출 로직 분리
+    .compose(id -> Future.all(
+        client.preparedQuery("SELECT * FROM orders WHERE uid = $1").execute(Tuple.of(id)),
+        client.preparedQuery("SELECT * FROM points WHERE uid = $1").execute(Tuple.of(id))
+    ))
+    .onSuccess(composite -> { 
+        // 결과 조합 - composite.resultAt(0) -> orders, resultAt(1) -> points
+    });
+
 ```
 
 ---
 
 ## 마치며
   
- Vert.x는 Event Loop 기반으로 높은 동시성과 처리량을 만들 수 있지만, 그만큼 **"Event Loop를 막지 않는다"**는 규율과 운영 관점의 튜닝이 필수입니다. 위 운영 포인트를 기준으로 병목을 조기에 발견하고(모니터링), 블로킹/직렬화/대용량 처리 구간을 격리·최적화하면, 시행착오를 줄이면서 안정적으로 운영할 수 있습니다.
-  
- ### References
+Vert.x는 이벤트 루프 기반으로 고성능을 발휘하지만, '이벤트 루프 논블로킹(Non-blocking)' 원칙 준수와 튜닝이 관건입니다. 블로킹 구간이나 대용량 처리 로직을 분리해 최적화하고 병목을 조기에 탐지한다면, 시행착오 없이 안정적인 시스템을 구축할 수 있습니다.
+
+### References
 
 - [Vert.x Core Documentation: VertxOptions (BlockedThreadChecker)](https://vertx.io/docs/vertx-core/java/#_configuring_options)
 - [Vert.x Core Documentation: Worker Verticles](https://vertx.io/docs/vertx-core/java/#_worker_verticles)
