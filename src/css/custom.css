@@ -1,343 +1,270 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
 
 /**
- * Modern Developer Portal Theme (Vercel/Stripe Inspired)
+ * Modern Tech Blog Theme (Linear/Vercel Aesthetic)
+ * Focus: Typography, Whitespace, and Refined Micro-details.
  */
 
-/* ─── Light Mode Variables ─── */
 :root {
+  /* Brand Palette (Indigo Modern) */
   --brand-color: #6366f1;
+  --brand-color-light: #818cf8;
+  --brand-color-dark: #4f46e5;
+
   --ifm-color-primary: var(--brand-color);
-  --ifm-color-primary-dark: #4f46e5;
+  --ifm-color-primary-dark: var(--brand-color-dark);
   --ifm-color-primary-darker: #4338ca;
   --ifm-color-primary-darkest: #3730a3;
-  --ifm-color-primary-light: #818cf8;
+  --ifm-color-primary-light: var(--brand-color-light);
   --ifm-color-primary-lighter: #a5b4fc;
   --ifm-color-primary-lightest: #c7d2fe;
 
-  --ifm-font-family-base: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  /* Neutrals (Zinc/Slate) */
+  --zinc-50: #fafafa;
+  --zinc-100: #f4f4f5;
+  --zinc-200: #e4e4e7;
+  --zinc-300: #d4d4d8;
+  --zinc-400: #a1a1aa;
+  --zinc-500: #71717a;
+  --zinc-600: #52525b;
+  --zinc-700: #3f3f46;
+  --zinc-800: #27272a;
+  --zinc-900: #18181b;
+  --zinc-950: #09090b;
+
+  /* Typography Foundations */
+  --ifm-font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --ifm-font-family-monospace: "Fira Code", "JetBrains Mono", ui-monospace, monospace;
   --ifm-font-size-base: 16px;
   --ifm-line-height-base: 1.75;
-
   --letter-spacing-base: -0.011em;
-  --letter-spacing-heading: -0.021em;
-  --letter-spacing-tight: -0.04em;
+  --letter-spacing-heading: -0.025em;
 
+  /* Global UI */
+  --ifm-global-radius: 12px;
   --ifm-background-color: #ffffff;
   --ifm-background-surface-color: #ffffff;
   --ifm-navbar-background-color: rgba(255, 255, 255, 0.8);
-  --ifm-toc-border-color: #f1f5f9;
-  --ifm-color-content: #334155;
-  --ifm-heading-color: #0f172a;
+  --ifm-color-content: var(--zinc-700);
+  --ifm-heading-color: var(--zinc-950);
+  --ifm-toc-border-color: var(--zinc-100);
 
-  --ifm-menu-color-background-active: #f1f5f9;
-  --ifm-menu-color-active: var(--brand-color);
+  --ifm-code-background: var(--zinc-100);
+  --ifm-pre-background: var(--zinc-950);
+  /* Dark code blocks even in light mode for focus */
 
-  --ifm-global-radius: 8px;
-  --ifm-global-shadow-lw: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-
-  --docusaurus-highlighted-code-line-bg: rgba(99, 102, 241, 0.1);
-  --ifm-pre-background: #f8fafc;
-  --ifm-code-background: #f1f5f9;
-
-  /* Sidebar narrowed to give more reading space */
-  --doc-sidebar-width: 270px !important;
+  --doc-sidebar-width: 280px !important;
 }
 
-/* ─── Dark Mode Variables ─── */
 [data-theme='dark'] {
   --brand-color: #818cf8;
-  --ifm-background-color: #0f172a;
-  --ifm-background-surface-color: #0f172a;
-  --ifm-navbar-background-color: rgba(15, 23, 42, 0.8);
-  --ifm-toc-border-color: #1e293b;
-  --ifm-color-content: #94a3b8;
-  --ifm-heading-color: #f8fafc;
-
-  --ifm-menu-color-background-active: rgba(129, 140, 248, 0.08);
-  --ifm-pre-background: #111827;
-  --ifm-code-background: #1e293b;
+  --ifm-background-color: var(--zinc-950);
+  --ifm-background-surface-color: var(--zinc-900);
+  --ifm-navbar-background-color: rgba(9, 9, 11, 0.8);
+  --ifm-color-content: var(--zinc-400);
+  --ifm-heading-color: var(--zinc-50);
+  --ifm-toc-border-color: var(--zinc-800);
+  --ifm-pre-background: #000000;
+  --ifm-code-background: var(--zinc-800);
 }
 
-/* ─── Global Reset ─── */
+/* ─── Global Reset & Body ─── */
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: var(--letter-spacing-base);
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
   text-rendering: optimizeLegibility;
-}
-
-::selection {
-  background-color: var(--ifm-menu-color-background-active);
-  color: var(--brand-color);
 }
 
 /* ─── Navbar ─── */
 .navbar {
-  box-shadow: inset 0 -1px 0 0 var(--ifm-toc-border-color);
-  padding: 0.5rem 1.5rem;
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  background-color: var(--ifm-navbar-background-color);
+  box-shadow: none;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
 }
 
 .navbar__brand {
   font-weight: 800;
-  letter-spacing: var(--letter-spacing-tight);
+  letter-spacing: -0.04em;
 }
 
-.navbar__title {
-  background: linear-gradient(135deg, var(--ifm-heading-color), #64748b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.navbar__item {
-  font-weight: 500;
-  font-size: 0.875rem;
-  padding: 0.5rem 0.75rem;
-  transition: opacity 0.2s ease;
-}
-
-.navbar__item:hover {
-  opacity: 0.7;
-  color: var(--brand-color);
-}
-
-/* ─── Sidebar (LNB) ─── */
-.theme-doc-sidebar-menu {
-  font-size: 0.875rem;
-  padding: 2rem 0 !important;
-  /* Remove horizontal padding here */
+/* ─── Sidebar ─── */
+.menu {
+  padding: 2rem 1rem !important;
 }
 
 .menu__link {
-  color: var(--ifm-color-content);
-  padding: 0 0.75rem !important;
-  height: 36px !important;
-  /* Force EXACT consistent height for all buttons */
-  max-height: 36px !important;
-  border-radius: 6px;
+  font-size: 0.9rem;
   font-weight: 500;
-  font-size: 0.825rem;
-  margin: 0.125rem 0.5rem !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.2s ease;
-  /* Prevent multiline height explosion */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.menu__link:hover {
-  background-color: var(--ifm-menu-color-background-active);
-  color: var(--ifm-heading-color);
-  transform: translateX(2px);
+  border-radius: 8px;
+  margin-bottom: 2px;
+  padding: 0.6rem 0.8rem !important;
 }
 
 .menu__link--active {
-  background-color: var(--ifm-menu-color-background-active) !important;
-  color: var(--brand-color) !important;
-  font-weight: 700;
+  background-color: var(--brand-color) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
-/* Caret/Arrow Button Wrapper - margin added here for vertical spacing instead of on the link */
-.menu__list-item-collapsible {
-  display: flex !important;
-  align-items: center !important;
-  /* vertical center alignment */
-  margin-top: 1rem !important;
-  /* Move margin to wrapper to keep alignment */
-  margin-bottom: 0.25rem !important;
-  /* Move margin to wrapper */
-}
-
-.menu__caret {
-  flex-shrink: 0;
-  margin-left: 0.5rem !important;
-  margin-right: 0.5rem !important; /* Space between caret and right edge */
-  padding: 0 !important;
-  opacity: 0.4;
-  zoom: 0.8;
-  /* Visually shrink the caret natively without breaking Docusaurus transform/rotate */
-  transition: opacity 0.2s ease;
-}
-
-.menu__list-item-collapsible:hover .menu__caret {
-  opacity: 0.8;
-}
-
-
-
-
-
-/* Category Headers */
-.menu__list-item-collapsible>.menu__link {
-  font-weight: 700;
-  font-size: 0.725rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #94a3b8;
-  margin: 0 !important;
-  /* Remove asymmetric margins to fix vertical centering with caret */
-  padding: 0.25rem 0.5rem !important;
-  /* Basic padding */
-  opacity: 0.9;
-  background-color: transparent !important;
-  cursor: pointer;
-  /* They will now inherit the strict 36px height, single-line truncation from .menu__link! */
-}
-
-
-.menu__list-item-collapsible>.menu__link:hover {
-  color: var(--ifm-heading-color);
-  opacity: 1;
-}
-
-
-/* ─── Typography & Content ─── */
+/* ─── Typography (Post Content) ─── */
 .markdown {
-  max-width: 800px;
+  max-width: 780px;
   margin: 0 auto;
 }
 
 .markdown h1 {
-  font-size: 2em;
-  font-weight: 700;
-  letter-spacing: var(--letter-spacing-tight);
-  padding-bottom: 0.3em;
-  border-bottom: 1px solid var(--ifm-toc-border-color);
-  margin-top: 24px;
-  margin-bottom: 16px;
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  margin-bottom: 2.5rem;
+  line-height: 1.1;
 }
 
+/* Modern Heading Style: No border, just space and weight */
 .markdown h2 {
-  font-size: 1.5em;
-  font-weight: 600;
-  letter-spacing: var(--letter-spacing-heading);
-  padding-bottom: 0.3em;
-  border-bottom: 1px solid var(--ifm-toc-border-color);
-  margin-top: 24px;
-  margin-bottom: 16px;
+  font-size: 1.85rem;
+  font-weight: 800;
+  margin-top: 4rem;
+  margin-bottom: 1.25rem;
+  border-bottom: none;
+  /* Removed border as requested */
+  letter-spacing: -0.03em;
 }
 
 .markdown h3 {
-  font-size: 1.25em;
-  font-weight: 600;
-  letter-spacing: var(--letter-spacing-heading);
-  margin-top: 24px;
-  margin-bottom: 16px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  letter-spacing: -0.02em;
 }
 
-.markdown p,
-.markdown li {
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 16px;
-  color: var(--ifm-heading-color);
+.markdown p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
 }
 
-.markdown ul,
-.markdown ol {
-  padding-left: 2em;
-  margin-bottom: 16px;
-}
-
-.markdown strong {
-  font-weight: 600;
-  color: var(--ifm-heading-color);
-}
-
-/* ─── Blockquotes (GitHub Style) ─── */
-.markdown blockquote {
-  padding: 0 1em;
-  color: #656d76; /* Classic Github Gray */
-  border-left: 0.25em solid var(--ifm-toc-border-color);
-  margin: 0 0 16px 0;
-  background: transparent;
-  box-shadow: none;
-  font-style: normal;
-}
-[data-theme='dark'] .markdown blockquote {
-  color: #8b949e;
-}
-
-/* ─── Buttons ─── */
-.button {
-  border-radius: 6px; /* GitHub uses 6px radius */
-  font-weight: 500;
-  padding: 5px 16px;
-  transition: .2s cubic-bezier(0.3, 0, 0.5, 1);
+/* ─── Tables (Refined Tech Style) ─── */
+.markdown table {
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 2.5rem 0;
   border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
-.button--primary {
-  background-color: #2da44e; /* GitHub Green */
-  color: #ffffff;
-  border-color: rgba(27, 31, 36, 0.15);
+.markdown table th {
+  background-color: var(--zinc-50);
+  color: var(--zinc-900);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-align: left;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  border-right: none;
 }
 
-.button--primary:hover {
-  background-color: #2c974b;
+[data-theme='dark'] .markdown table th {
+  background-color: var(--zinc-900);
+  color: var(--zinc-50);
 }
 
-[data-theme='dark'] .button--primary {
-  background-color: #238636;
+.markdown table td {
+  padding: 1rem 1.25rem;
+  font-size: 0.9375rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  border-right: none;
+  color: var(--ifm-color-content);
 }
-[data-theme='dark'] .button--primary:hover {
-  background-color: #2ea043;
+
+.markdown table tr:last-child td {
+  border-bottom: none;
+}
+
+.markdown table tr:hover td {
+  background-color: var(--zinc-50);
+}
+
+[data-theme='dark'] .markdown table tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ─── Code Blocks (Studio Style) ─── */
+.prism-code {
+  position: relative;
+  border-radius: 14px;
+  margin: 2.5rem 0;
+  padding: 1.5rem !important;
+  font-size: 0.9rem;
+  border: 1px solid var(--zinc-800);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+  background-color: #000 !important;
+  /* Always dark for that 'terminal' feel */
+}
+
+/* Code block decoration - fake window controls */
+.prism-code::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  width: 40px;
+  height: 8px;
+  background: radial-gradient(circle, #333 2px, transparent 2.5px);
+  background-size: 12px 8px;
+  opacity: 0.5;
+}
+
+code {
+  font-size: 0.85em;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  background-color: var(--ifm-code-background);
+  border: 1px solid var(--ifm-toc-border-color);
+  color: var(--brand-color-dark);
+}
+
+[data-theme='dark'] code {
+  color: var(--brand-color-light);
+}
+
+/* ─── Blockquotes ─── */
+.markdown blockquote {
+  border-left: 3px solid var(--brand-color);
+  background: var(--zinc-50);
+  padding: 1.5rem 2rem;
+  border-radius: 0 12px 12px 0;
+  margin: 2.5rem 0;
+  color: var(--zinc-600);
+  font-style: italic;
+}
+
+[data-theme='dark'] .markdown blockquote {
+  background: var(--zinc-900);
+  color: var(--zinc-400);
 }
 
 /* ─── Pagination ─── */
 .pagination-nav__link {
-  border-radius: 6px;
+  border-radius: 16px;
+  padding: 1.5rem;
   border: 1px solid var(--ifm-toc-border-color);
-  padding: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ─── Code Blocks ─── */
-.prism-code {
-  border-radius: 6px;
-  border: 1px solid var(--ifm-toc-border-color);
-  margin: 16px 0;
-  padding: 16px !important;
+.pagination-nav__link:hover {
+  border-color: var(--brand-color);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(99, 102, 241, 0.15);
 }
 
-code {
-  border-radius: 6px;
-  padding: 0.2em 0.4em;
-  font-size: 85%;
-  background-color: var(--ifm-pre-background);
-  font-family: var(--ifm-font-family-monospace);
-}
-
-/* ─── Tables (GitHub Style Striped) ─── */
-.markdown table {
-  width: max-content;
-  max-width: 100%;
-  margin-top: 0;
-  margin-bottom: 16px;
-  border-collapse: collapse;
-  display: block;
-  overflow-x: auto;
-}
-
-.markdown table th,
-.markdown table td {
-  padding: 6px 13px;
-  border: 1px solid var(--ifm-toc-border-color);
-}
-
-.markdown table tr {
-  background-color: var(--ifm-background-color);
-  border-top: 1px solid var(--ifm-toc-border-color);
-}
-
-.markdown table tr:nth-child(2n) {
-  background-color: var(--ifm-pre-background);
+/* ─── Custom Landing Utility ─── */
+.hero-gradient {
+  background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.1), transparent),
+    radial-gradient(circle at bottom left, rgba(129, 140, 248, 0.05), transparent);
 }
