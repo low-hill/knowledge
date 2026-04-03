@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-algorithms/large-data-duplicate-removal" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">large-data-duplicate-removal | Sowing Thoughts on a Gentle Hill</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://low-hill.github.io/knowledge/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://low-hill.github.io/knowledge/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://low-hill.github.io/knowledge/docs/algorithms/large-data-duplicate-removal"><meta data-rh="true" property="og:locale" content="ko"><meta data-rh="true" name="docusaurus_locale" content="ko"><meta data-rh="true" name="docsearch:language" content="ko"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="large-data-duplicate-removal | Sowing Thoughts on a Gentle Hill"><meta data-rh="true" name="description" content="BitMap"><meta data-rh="true" property="og:description" content="BitMap"><link data-rh="true" rel="icon" href="/knowledge/img/logo.png"><link data-rh="true" rel="canonical" href="https://low-hill.github.io/knowledge/docs/algorithms/large-data-duplicate-removal"><link data-rh="true" rel="alternate" href="https://low-hill.github.io/knowledge/docs/algorithms/large-data-duplicate-removal" hreflang="ko"><link data-rh="true" rel="alternate" href="https://low-hill.github.io/knowledge/docs/algorithms/large-data-duplicate-removal" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"🧮 Algorithms","item":"https://low-hill.github.io/knowledge/docs/category/-algorithms"},{"@type":"ListItem","position":2,"name":"BitMap","item":"https://low-hill.github.io/knowledge/docs/algorithms/large-data-duplicate-removal"}]}</script><link rel="alternate" type="application/rss+xml" href="/knowledge/blog/rss.xml" title="Sowing Thoughts on a Gentle Hill RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/knowledge/blog/atom.xml" title="Sowing Thoughts on a Gentle Hill Atom Feed">
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/knowledge/assets/css/styles.df34112b.css">
+<script src="/knowledge/assets/js/runtime~main.ccd09b6f.js" defer="defer"></script>
+<script src="/knowledge/assets/js/main.26cbf217.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/knowledge/img/logo.png"><div role="region" aria-label="본문으로 건너뛰기"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">본문으로 건너뛰기</a></div><nav aria-label="메인" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="사이드바 펼치거나 접기" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/knowledge/"><div class="navbar__logo"><img src="/knowledge/img/logo.png" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/knowledge/img/logo.png" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">개발 노트</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/knowledge/docs">문서</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/low-hill/knowledge" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="어두운 모드와 밝은 모드 전환하기 (현재 system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="맨 위로 스크롤하기" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="문서 사이드바" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/knowledge/docs"><span title="Architecture &amp; System Design" class="linkLabel_WmDU">Architecture &amp; System Design</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/knowledge/docs/category/-architecture--design"><span title="🏛 Architecture &amp; Design" class="categoryLinkLabel_W154">🏛 Architecture &amp; Design</span></a><button aria-label="사이드바 분류 &#x27;🏛 Architecture &amp; Design&#x27; 펼치기" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/knowledge/docs/category/️-backend-engineering"><span title="⚙️ Backend Engineering" class="categoryLinkLabel_W154">⚙️ Backend Engineering</span></a><button aria-label="사이드바 분류 &#x27;⚙️ Backend Engineering&#x27; 펼치기" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/knowledge/docs/category/️-java--spring"><span title="☕️ Java &amp; Spring" class="categoryLinkLabel_W154">☕️ Java &amp; Spring</span></a><button aria-label="사이드바 분류 &#x27;☕️ Java &amp; Spring&#x27; 펼치기" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/knowledge/docs/category/-data-rdbnosql"><span title="💾 Data (RDB/NoSQL)" class="categoryLinkLabel_W154">💾 Data (RDB/NoSQL)</span></a><button aria-label="사이드바 분류 &#x27;💾 Data (RDB/NoSQL)&#x27; 펼치기" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/knowledge/docs/category/️-cloud--devops"><span title="☁️ Cloud &amp; DevOps" class="categoryLinkLabel_W154">☁️ Cloud &amp; DevOps</span></a><button aria-label="사이드바 분류 &#x27;☁️ Cloud &amp; DevOps&#x27; 펼치기" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/knowledge/docs/category/-software-design"><span title="📐 Software Design" class="categoryLinkLabel_W154">📐 Software Design</span></a><button aria-label="사이드바 분류 &#x27;📐 Software Design&#x27; 펼치기" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href="/knowledge/docs/category/-algorithms"><span title="🧮 Algorithms" class="categoryLinkLabel_W154">🧮 Algorithms</span></a><button aria-label="사이드바 분류 &#x27;🧮 Algorithms&#x27; 접기" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/knowledge/docs/algorithms/Algorithm"><span title="System design에서 활용되는 Algorithm" class="linkLabel_WmDU">System design에서 활용되는 Algorithm</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/knowledge/docs/algorithms/large-data-duplicate-removal"><span title="BitMap" class="linkLabel_WmDU">BitMap</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/knowledge/docs/category/-tools"><span title="🛠 Tools" class="categoryLinkLabel_W154">🛠 Tools</span></a><button aria-label="사이드바 분류 &#x27;🛠 Tools&#x27; 펼치기" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/knowledge/docs/category/-projects"><span title="🚀 Projects" class="categoryLinkLabel_W154">🚀 Projects</span></a><button aria-label="사이드바 분류 &#x27;🚀 Projects&#x27; 펼치기" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="탐색 경로"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="홈" class="breadcrumbs__link" href="/knowledge/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/knowledge/docs/category/-algorithms"><span>🧮 Algorithms</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">BitMap</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">이 페이지에서</button></div><div class="theme-doc-markdown markdown"><header><h1>large-data-duplicate-removal</h1></header><h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="bitmap">BitMap<a href="#bitmap" class="hash-link" aria-label="BitMap에 대한 직접 링크" title="BitMap에 대한 직접 링크" translate="no">​</a></h2>
+<p>BitMap은 하나의 bit로 요소를 표시하고 그 값은 0 또는 1일 수 있고 메모리 공간을 줄일 수 있다.</p>
+<ul>
+<li class="">예) 1, 4, 6을 BitMap으로 저장하면 다음과 같다.
+<img decoding="async" loading="lazy" src="https://github.com/low-hill/Knowledge/assets/6086626/0894201a-813f-4d3f-ad1c-05f3f07fda4c" alt="image" class="img_ev3q"></li>
+<li class="">BitMap은 중복 제거 및 정렬에 적합하고 Bloom filter는 비트맵 기반으로 구현된다.
+그러나 비트맵은 0과 1만 표현하고 다른 숫자를 저장할 수 없어 true 혹은 false 판별하는 상황에 적합합니다.</li>
+</ul>
+<p>BitMap은 값 범위가 작을 때 적합하고 값 범위가 너무 크면 BitMap의 저장 공간도 커져서 BloomFilter를 사용하는 것이 더 적합하다.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="bloomfilter">BloomFilter<a href="#bloomfilter" class="hash-link" aria-label="BloomFilter에 대한 직접 링크" title="BloomFilter에 대한 직접 링크" translate="no">​</a></h2>
+<p>BloomFilter는 어떤 값이 집합에 속해 있는지 여부를 신속하게 검색하는 데 사용되는 자료 구조이다. 기본 원리는 여러 해시 함수를 사용하여 여러 비트로 매핑하고 이를 1로 설정하는 것이다. 저장된 데이터에 비트가 모두 1로 설정되어 있으면 값이 요소에 존재할 수 있다. BloomFilter는 값이 존재하지 않는지 정확하게 판단할 수 있지만 hash collision으로 값이 존재 할 수 도 있다고 판단할 수 있다.(없는 값을 있다고 판단 될 수 있음). 이러한 문제는 hash collision을 줄이고 더 많은 hash function 추가 및 bitmap을 늘려 정확도를 높일 수 있다.
+<img decoding="async" loading="lazy" src="https://github.com/low-hill/Knowledge/assets/6086626/5b07fb3b-9944-4617-80c2-575dc0c315ed" alt="image" class="img_ev3q"></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="원리">원리<a href="#원리" class="hash-link" aria-label="원리에 대한 직접 링크" title="원리에 대한 직접 링크" translate="no">​</a></h3>
+<ul>
+<li class="">초기화<!-- -->
+<ul>
+<li class="">BloomFilter 초기화 시 집합의 크기(vector size)와 fpp를 지정해야 한다. BloomFilter 내부에는 하나의 비트 배열과 여러 해시 함수가 포함되어 있으며 각 해시 함수로 해쉬 값을  생성한다.</li>
+</ul>
+</li>
+<li class="">값 추가<!-- -->
+<ul>
+<li class="">추가하려는 값은 여러 해시 함수를 거쳐 해시 값이 생성되고, (해당 해시값 = 비트 배열의 index)인 비트 배열[index]가 1로 설정 된다.(인덱스 값이 이미 1로 설정되어 있으면 다시 설정할 필요가 없다.)</li>
+</ul>
+</li>
+<li class="">값이 존재하는지 확인<!-- -->
+<ul>
+<li class="">해쉬 함수를 거쳐 생성된 인덱스 값이 1로 설정되어 있으면 값이 존재 할 수 있다고 판단</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="다이어그램을-통한-상세-설명삽입-및-조회-과정">다이어그램을 통한 상세 설명(삽입 및 조회 과정)<a href="#다이어그램을-통한-상세-설명삽입-및-조회-과정" class="hash-link" aria-label="다이어그램을 통한 상세 설명(삽입 및 조회 과정)에 대한 직접 링크" title="다이어그램을 통한 상세 설명(삽입 및 조회 과정)에 대한 직접 링크" translate="no">​</a></h3>
+<blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="a-시퀀스-삽입">(a): 시퀀스 삽입<a href="#a-시퀀스-삽입" class="hash-link" aria-label="(a): 시퀀스 삽입에 대한 직접 링크" title="(a): 시퀀스 삽입에 대한 직접 링크" translate="no">​</a></h3>
+</blockquote>
+<ol>
+<li class="">
+<p>시퀀스 &quot;ACCGTAG&quot;: 이 시퀀스가 우리의 집합에 있는지 확인하고자 한다고 가정해봅시다.</p>
+</li>
+<li class="">
+<p>k-mers: 위 시퀀스는 &quot;k-mers&quot;라고 불리는 더 작은 부분들로 나뉩니다 (chunks or fragments과 유사). 예를 들어, &quot;ACCG&quot;, &quot;CCGT&quot;, &quot;CGTA&quot;, &quot;GTAG&quot;로 분해됩니다.</p>
+</li>
+<li class="">
+<p>해싱: 각 k-mers는 여러 개의 해시 함수를 통과합니다. 이 해시 함수들은 k-mers를 비트 배열의 특정 위치에 매핑합니다.</p>
+</li>
+<li class="">
+<p>비트 설정: 각 k-mers에 대해, 비트 배열의 해당 비트들이 1로 설정됩니다. 비트 배열은 처음에 모두 0이지만, k-mers를 추가함에 따라 해당되는 비트들이 1로 변경됩니다.</p>
+</li>
+</ol>
+<blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="b-시퀀스-조회">(b): 시퀀스 조회<a href="#b-시퀀스-조회" class="hash-link" aria-label="(b): 시퀀스 조회에 대한 직접 링크" title="(b): 시퀀스 조회에 대한 직접 링크" translate="no">​</a></h3>
+</blockquote>
+<ol>
+<li class="">
+<p>k-mers: a의 k-mers과정과 마찬가지로, 이 시퀀스도 k-mers로 분해됩니다 (예: &quot;CGTA&quot;, &quot;GTAT&quot;).</p>
+</li>
+<li class="">
+<p>비트 확인: k-mers들을 해싱하고 비트 배열의 비트들을 확인합니다:</p>
+</li>
+</ol>
+<ul>
+<li class="">모든 비트가 1로 설정되어 있다면 (&quot;CGTA&quot;의 경우처럼), 이는 시퀀스가 집합에 있을 수 있음을 시사합니다.</li>
+<li class="">단 하나의 비트라도 0이라면 (&quot;GTAT&quot;의 경우처럼), 이는 시퀀스가 확실히 집합에 없다는 것을 의미합니다.
+<img decoding="async" loading="lazy" src="https://github.com/user-attachments/assets/80cc2e6a-50a7-4b4e-9d33-2b504127a948" alt="image" class="img_ev3q"></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="블룸-필터의-특징">블룸 필터의 특징<a href="#블룸-필터의-특징" class="hash-link" aria-label="블룸 필터의 특징에 대한 직접 링크" title="블룸 필터의 특징에 대한 직접 링크" translate="no">​</a></h3>
+<ul>
+<li class="">매우 빠른 검색 속도: O(k) 시간 복잡도 (k는 사용된 해시 함수의 수)</li>
+<li class="">공간 효율성: 원본 데이터보다 훨씬 적은 메모리 사용</li>
+<li class="">존재 가능성:<!-- -->
+<ul>
+<li class="">(False Positive) 가능성: 존재하지 않는 원소를 존재한다고 잘못 판단할 수 있음</li>
+<li class="">(no False Negative) 불가능: 존재하는 원소를 존재하지 않는다고 판단하는 경우는 없음</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="장단점">장단점<a href="#장단점" class="hash-link" aria-label="장단점에 대한 직접 링크" title="장단점에 대한 직접 링크" translate="no">​</a></h3>
+<p>장점: 이진데이터를 저장하기 때문에 공간이 절약되고 데이터 삽입 및 검색이 빠르다
+단점: 값이 존재 여부를 정확하게 판단 할 수 없고(fpp) 삭제가 어렵다(서로 다른 값들이 동일한 해시값으로 생성되어 동일한 배열 index를 공유할 수 있다.)</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="guava로-구현된-코드는-하위와-같다">Guava로 구현된 코드는 하위와 같다.<a href="#guava로-구현된-코드는-하위와-같다" class="hash-link" aria-label="Guava로 구현된 코드는 하위와 같다.에 대한 직접 링크" title="Guava로 구현된 코드는 하위와 같다.에 대한 직접 링크" translate="no">​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#000000;--prism-background-color:#ffffff"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#000000;background-color:#ffffff"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#000000"><span class="token plain">import com.google.common.hash.BloomFilter;</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">import com.google.common.hash.Funnels;</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">public class BloomFilterExample {</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">    public static void main(String[] args) {</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">        // expectedInsertions  100，fpp 0.01</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">        BloomFilter&lt;String&gt; bloomFilter = BloomFilter.create(Funnels.stringFunnel(), 100, 0.01);</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">        // 값 추가</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">        bloomFilter.put(&quot;value1&quot;);</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">        bloomFilter.put(&quot;value2&quot;);</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">        bloomFilter.put(&quot;value3&quot;);</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">        // 값 포함 여부 판단</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">        System.out.println(bloomFilter.mightContain(&quot;value1&quot;)); // true</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">        System.out.println(bloomFilter.mightContain(&quot;me&quot;));  // false</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">    }</span><br></span><span class="token-line" style="color:#000000"><span class="token plain">}</span><br></span><span class="token-line" style="color:#000000"><span class="token plain" style="display:inline-block"></span><br></span></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="적용-사례">적용 사례<a href="#적용-사례" class="hash-link" aria-label="적용 사례에 대한 직접 링크" title="적용 사례에 대한 직접 링크" translate="no">​</a></h4>
+<p>블룸 필터의 특성은 대규모 데이터셋에서 특히 유용합니다. 예를 들어, 웹 크롤러가 이미 방문한 URL을 추적하거나, 스팸 필터가 알려진 스팸 이메일 주소를 빠르게 확인하는 데 사용될 수 있습니다. 또한, 분산 시스템에서 네트워크 트래픽을 줄이기 위해 데이터의 존재 여부를 사전에 확인하는 데도 효과적으로 활용될 수 있습니다.</p>
+<ul>
+<li class="">웹 크롤러: BloomFilter를 사용하여 이미 크롤링된 웹 페이지를 필터링하여 중복 및 리소스 낭비를 방지.</li>
+<li class="">분산 시스템: BloomFilter를 사용하여 분산 캐시에 요소가 있는지 여부를 확인하여 모든 노드에서의 검색을 방지하고 네트워크 부하를 줄일 수 있다.</li>
+<li class="">스팸 필터링: 메일 주소가 스팸 목록에 있는지 확인하여 스팸을 필터링할 수 있다.
+위 케이스 외에 캐시시스템 및 IP 및 핸드폰 차단 등에 사용된다.</li>
+<li class="">Cache penetration</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="구체적인-사례로-알아보는-bloom-filter-적용">구체적인 사례로 알아보는 Bloom filter 적용<a href="#구체적인-사례로-알아보는-bloom-filter-적용" class="hash-link" aria-label="구체적인 사례로 알아보는 Bloom filter 적용에 대한 직접 링크" title="구체적인 사례로 알아보는 Bloom filter 적용에 대한 직접 링크" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="수십억-사용자-중-특정-사용자명의-존재-여부를-효율적으로-확인하는-방법">수십억 사용자 중 특정 사용자명의 존재 여부를 효율적으로 확인하는 방법<a href="#수십억-사용자-중-특정-사용자명의-존재-여부를-효율적으로-확인하는-방법" class="hash-link" aria-label="수십억 사용자 중 특정 사용자명의 존재 여부를 효율적으로 확인하는 방법에 대한 직접 링크" title="수십억 사용자 중 특정 사용자명의 존재 여부를 효율적으로 확인하는 방법에 대한 직접 링크" translate="no">​</a></h3>
+<p>대규모 사용자 데이터베이스에서 특정 사용자명이 존재하는지 빠르고 효율적으로 확인하는 방법에 대해 비교하고 분석해보겠습니다. 사용자 이름의 확인하는 과정은 여러 가지 방법으로 접근할 수 있으며, 각 방법마다 장단점이 존재합니다. 이 글에서는 전통적인 데이터베이스 쿼리, Redis를 활용한 캐싱 전략, 그리고 블룸 필터를 이용한 최적화된 접근 방식의 세 가지 방법을 살펴보겠습니다.</p>
+<blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="방법-1-데이터베이스-조회">방법 1: 데이터베이스 조회<a href="#방법-1-데이터베이스-조회" class="hash-link" aria-label="방법 1: 데이터베이스 조회에 대한 직접 링크" title="방법 1: 데이터베이스 조회에 대한 직접 링크" translate="no">​</a></h3>
+</blockquote>
+<p>사용자명의 존재 여부를 확인하는 가장 직접적인 방법은 데이터베이스를 조회하는 것입니다. 하지만 사용자 수가 수백만 또는 수십억 명으로 증가하면, 이 접근법은 비효율적이 될 수 있습니다. 다음은 주요 단점입니다:</p>
+<ol>
+<li class="">
+<p>높은 지연 시간: 대규모 데이터베이스를 쿼리할 때, 증가된 지연 시간으로 인해 성능이 저하될 수 있습니다. 각 쿼리는 애플리케이션과 데이터베이스 서버 간의 네트워크 통신을 수반하므로 지연이 발생합니다. 결과적으로, 사용자는 응답을 받기까지 더 오래 기다려야 할 수 있습니다.</p>
+</li>
+<li class="">
+<p>데이터베이스 부하 증가: 사용자명의 고유성을 확인하기 위한 SELECT 쿼리는 CPU 사용량과 입출력(I/O) 작업을 포함합니다. 특히 피크 시간대에는 이로 인해 병목 현상이 발생할 수 있으며, 전체 시스템의 성능에 부정적인 영향을 미칠 수 있습니다.</p>
+</li>
+<li class="">
+<p>확장성 문제: 데이터베이스는 동시 연결 수를 처리하는 데 한계가 있습니다. 사용자 등록이 증가함에 따라 데이터베이스는 이를 따라가는 데 어려움을 겪을 수 있으며, 이는 전반적인 성능 저하로 이어질 수 있습니다. 데이터베이스를 수직적으로 확장하는 것은 비용이 많이 들고 한계가 있습니다. 또한, 수평적 확장도 복잡성을 증가시키고 데이터 일관성 유지에 추가적인 과제를 제시합니다.</p>
+</li>
+</ol>
+<blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="방법-2-redis-캐시-솔루션">방법 2: Redis 캐시 솔루션<a href="#방법-2-redis-캐시-솔루션" class="hash-link" aria-label="방법 2: Redis 캐시 솔루션에 대한 직접 링크" title="방법 2: Redis 캐시 솔루션에 대한 직접 링크" translate="no">​</a></h3>
+</blockquote>
+<p>데이터베이스 쿼리의 성능 문제를 완화하기 위해 Redis와 같은 캐싱 계층을 도입할 수 있습니다. 이 방법은 사용자명을 Redis 해시 맵에 저장하여 더 빠른 확인을 가능하게 합니다.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="redis-캐시-접근-방식의-과제">Redis 캐시 접근 방식의 과제:<a href="#redis-캐시-접근-방식의-과제" class="hash-link" aria-label="Redis 캐시 접근 방식의 과제:에 대한 직접 링크" title="Redis 캐시 접근 방식의 과제:에 대한 직접 링크" translate="no">​</a></h4>
+<ol>
+<li class="">
+<p>메모리 소비:
+Redis에 저장된 각 사용자명은 약 15바이트의 메모리를 소비합니다. 10억 개의 사용자명을 저장하려면 약 15GB의 메모리가 필요합니다. 이는 상당한 양의 메모리를 요구하며, 대규모 시스템에서는 비용과 리소스 관리 측면에서 중요한 고려사항이 됩니다.</p>
+</li>
+<li class="">
+<p>확장성 문제:
+데이터베이스 조회보다는 빠르지만, 대용량 데이터셋을 메모리에 저장하는 것은 여전히 비용이 많이 들 수 있습니다. 또한, 리소스 부족을 방지하기 위해 신중한 관리가 필요합니다. 데이터 크기가 증가함에 따라 메모리 용량을 지속적으로 확장해야 하며, 이는 하드웨어 비용 증가로 이어질 수 있습니다.</p>
+</li>
+</ol>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="추가적인-고려사항">추가적인 고려사항:<a href="#추가적인-고려사항" class="hash-link" aria-label="추가적인 고려사항:에 대한 직접 링크" title="추가적인 고려사항:에 대한 직접 링크" translate="no">​</a></h4>
+<ol>
+<li class="">데이터 일관성:<br>
+<!-- -->Redis 캐시와 기본 데이터베이스 간의 동기화를 유지하는 것이 중요합니다. 이를 위해 적절한 캐시 무효화 전략이 필요합니다.</li>
+<li class="">장애 복구:<br>
+<!-- -->Redis 서버 장애 시 대비책을 마련해야 합니다. 예를 들어, Redis 클러스터 구성이나 백업 시스템 구축 등을 고려할 수 있습니다.
+네트워크 오버헤드: Redis 서버와의 통신에도 일정 수준의 네트워크 지연이 발생할 수 있으므로, 이를 최소화하기 위한 전략이 필요할 수 있습니다.
+이러한 과제들을 고려하여, Redis 캐시 솔루션은 중소규모 시스템에서는 효과적일 수 있지만, 대규모 시스템에서는 추가적인 최적화나 다른 접근 방식과의 조합이 필요할 수 있습니다.</li>
+</ol>
+<blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="방법-3-bloom-filters-사용">방법 3: Bloom Filters 사용<a href="#방법-3-bloom-filters-사용" class="hash-link" aria-label="방법 3: Bloom Filters 사용에 대한 직접 링크" title="방법 3: Bloom Filters 사용에 대한 직접 링크" translate="no">​</a></h3>
+</blockquote>
+<p>이러한 문제를 해결하기 위해 우리는 &#x27;블룸 필터&#x27;라는 확률적 자료 구조를 사용할 수 있습니다. 블룸 필터는 원소가 집합에 속하는지 여부를 검사하는데 사용되는 공간 효율적인 방법입니다.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="요약">요약<a href="#요약" class="hash-link" aria-label="요약에 대한 직접 링크" title="요약에 대한 직접 링크" translate="no">​</a></h4>
+<ol>
+<li class="">블룸 필터의 이점: 이 방법은 메모리 효율적이며, 어떤 항목이 집합에 있을 가능성을 빠르게 확인할 수 있습니다.</li>
+<li class="">거짓 양성: 실제로는 집합에 없는 항목을 있다고 잘못 표시할 수 있습니다.</li>
+<li class="">확실한 음성: 확인 결과 항목이 집합에 없다고 나오면, 이는 100% 정확합니다.</li>
+</ol>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="결론">결론<a href="#결론" class="hash-link" aria-label="결론에 대한 직접 링크" title="결론에 대한 직접 링크" translate="no">​</a></h4>
+<p>블룸 필터를 사용하면 대규모 사용자 데이터베이스에서도 매우 빠르게 사용자명의 존재 여부를 확인할 수 있습니다. 거짓 양성의 가능성이 있지만, 이는 대부분의 경우 허용 가능한 수준입니다. 필요하다면 의심되는 경우에만 데이터베이스를 직접 조회하는 방식으로 보완할 수 있습니다.
+이러한 기술은 사용자 경험을 크게 향상시키며, 특히 실시간 응답이 중요한 대규모 시스템에서 매우 유용합니다.</p>
+<hr>
+<p>Reference</p>
+<ul>
+<li class=""><a href="https://medium.com/@aditimishra_541/how-to-efficiently-check-if-a-username-exists-among-billions-of-users-7ed1e5c60489" target="_blank" rel="noopener noreferrer" class="">How to Efficiently Check If a Username Exists Among Billions of Users</a></li>
+</ul></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="문서 페이지"><a class="pagination-nav__link pagination-nav__link--prev" href="/knowledge/docs/algorithms/Algorithm"><div class="pagination-nav__sublabel">이전</div><div class="pagination-nav__label">System design에서 활용되는 Algorithm</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/knowledge/docs/category/-tools"><div class="pagination-nav__sublabel">다음</div><div class="pagination-nav__label">🛠 Tools</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#bitmap" class="table-of-contents__link toc-highlight">BitMap</a></li><li><a href="#bloomfilter" class="table-of-contents__link toc-highlight">BloomFilter</a><ul><li><a href="#원리" class="table-of-contents__link toc-highlight">원리</a></li><li><a href="#다이어그램을-통한-상세-설명삽입-및-조회-과정" class="table-of-contents__link toc-highlight">다이어그램을 통한 상세 설명(삽입 및 조회 과정)</a></li><li><a href="#a-시퀀스-삽입" class="table-of-contents__link toc-highlight">(a): 시퀀스 삽입</a></li><li><a href="#b-시퀀스-조회" class="table-of-contents__link toc-highlight">(b): 시퀀스 조회</a></li><li><a href="#블룸-필터의-특징" class="table-of-contents__link toc-highlight">블룸 필터의 특징</a></li><li><a href="#장단점" class="table-of-contents__link toc-highlight">장단점</a></li><li><a href="#guava로-구현된-코드는-하위와-같다" class="table-of-contents__link toc-highlight">Guava로 구현된 코드는 하위와 같다.</a></li></ul></li><li><a href="#구체적인-사례로-알아보는-bloom-filter-적용" class="table-of-contents__link toc-highlight">구체적인 사례로 알아보는 Bloom filter 적용</a><ul><li><a href="#수십억-사용자-중-특정-사용자명의-존재-여부를-효율적으로-확인하는-방법" class="table-of-contents__link toc-highlight">수십억 사용자 중 특정 사용자명의 존재 여부를 효율적으로 확인하는 방법</a></li><li><a href="#방법-1-데이터베이스-조회" class="table-of-contents__link toc-highlight">방법 1: 데이터베이스 조회</a></li><li><a href="#방법-2-redis-캐시-솔루션" class="table-of-contents__link toc-highlight">방법 2: Redis 캐시 솔루션</a></li><li><a href="#방법-3-bloom-filters-사용" class="table-of-contents__link toc-highlight">방법 3: Bloom Filters 사용</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">© 2026 Sowing Thoughts on a Gentle Hill • Built with Docusaurus</div></div></div></footer></div>
+</body>
+</html>

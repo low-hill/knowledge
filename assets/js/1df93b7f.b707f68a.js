@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunktemp_doc=globalThis.webpackChunktemp_doc||[]).push([[4583],{6866(t,c,e){e.r(c),e.d(c,{default:()=>a});e(6540);var o=e(6347),s=e(6025),u=e(4848);function a(){return(0,u.jsx)(o.rd,{to:(0,s.Ay)("/docs")})}}}]);
