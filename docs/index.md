@@ -3,7 +3,7 @@ sidebar_label: "Architecture & System Design"
 sidebar_position: 1
 id: intro
 slug: /
-title: HOME
+title: "목차"
 ---
 ## Architecture & System Design
 - [Microservice Architecture](01-architecture/msa.md)

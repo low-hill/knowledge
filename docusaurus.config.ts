@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'Sowing Thoughts on a Gentle Hill',
   tagline: '지속적인 학습과 성장을 위한 개발자의 기술 노트입니다.',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/logo.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   /*
@@ -45,8 +45,6 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/docs',
-          editUrl:
-            'https://github.com/low-hill/knowledge/tree/main/',
         },
         blog: {
           showReadingTime: true,
@@ -54,11 +52,6 @@ const config: Config = {
             type: ['rss', 'atom'],
             xslt: true,
           },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/low-hill/knowledge/tree/main/',
-          // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
@@ -86,7 +79,7 @@ const config: Config = {
       title: '개발 노트',
       logo: {
         alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        src: 'img/logo.png',
       },
       items: [
         {
