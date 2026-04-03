@@ -74,7 +74,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     colorMode: {
-      respectPrefersColorScheme: true,
+      respectPrefersColorScheme: false,
     },
     docs: {
       sidebar: {
@@ -103,28 +103,9 @@ const config: Config = {
       ],
     },
     footer: {
-      style: 'dark',
-      links: [
-        {
-          title: '📚 콘텐츠',
-          items: [
-            {
-              label: '개발 노트',
-              to: '/docs/',
-            },
-          ],
-        },
-        {
-          title: '🔗 링크',
-          items: [
-            {
-              label: 'GitHub',
-              href: 'https://github.com/low-hill/knowledge',
-            },
-          ],
-        },
-      ],
-      copyright: `© ${new Date().getFullYear()} Sowing Thoughts on a Gentle Hill`,
+      style: 'light',
+      links: [],
+      copyright: `© ${new Date().getFullYear()} Sowing Thoughts on a Gentle Hill • Built with Docusaurus`,
     },
     prism: {
       theme: prismThemes.vsLight,

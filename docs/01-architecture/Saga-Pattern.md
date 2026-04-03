@@ -10,12 +10,13 @@ Saga 패턴은 분산 트랜잭션에서 전체 트랜잭션이 성공적으로 
 
 ## Saga 패턴의 유형
 Saga 패턴을 구현하는 방법에는 'choreography'와 'orchestration'이라는 두 가지 유형이 있다.
->### Choreography Saga Pattern
+
+### Choreography Saga Pattern
 Choreography Saga Pattern은 publish-subscribe 원칙을 적용하여 트랜잭션을 조율하는 기능을 제공한다. 각 마이크로서비스는 자체 로컬 트랜잭션을 실행하고 메시지 브로커 시스템에 이벤트를 게시하여 다른 마이크로서비스에서 로컬 트랜잭션을 트리거한다.      
 아래 그림과 같이 Choreography Saga는 각자의 책임을 가지기 때문에 서비스 간의 결합도는 느슨하지만, 복잡도가 높다. 이 방법은 마이크로서비스 트랜잭션 단계가 너무 많지 않은 심플한 워크플로에 적합하다.      
 ![image](https://github.com/low-hill/Knowledge/assets/6086626/a54ab0ca-3fbb-4027-abdb-abe0a8ad26f1)
 
->### Orchestration Saga Pattern
+### Orchestration Saga Pattern
 Orchestration Saga는 트랜잭션을 중앙 집중식으로 관리한다. 중앙 집중식 컨트롤러 마이크로서비스는 마이크로서비스의 로컬 트랜잭션을 순차적으로 실행하도록 호출하고, 단게 중 하나에 실패하면 보상 트랜잭션으로 롤백 단계를 실행한다.
 Orchestration Saga는 중앙 컴포넌트가 트랜잭션을 제어하므로 서비스 간의 복잡성은 줄어들지만, 서비스 간의 결합도가 높아진다. 이 방법은 많은 단계를 포함하는 복잡한 워크플로에 적합할 수 있지만 중앙 컴포넌트가 장애 발생시를 고려해야 한다.     
 ![image](https://github.com/low-hill/Knowledge/assets/6086626/3fb9079a-7500-4936-8db9-7420a2afeb91)

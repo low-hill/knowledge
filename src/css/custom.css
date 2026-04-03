@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 /**
- * Modern Tech Blog Theme (Linear/Vercel Aesthetic)
- * Focus: Typography, Whitespace, and Refined Micro-details.
+ * Modern Tech Blog Theme (Linear/Vercel/Astro Aesthetic)
+ * Focus: Precision, Whitespace, and Layered Depths.
  */
 
 :root {
@@ -34,7 +34,7 @@
 
   /* Typography Foundations */
   --ifm-font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  --ifm-font-family-monospace: "Fira Code", "JetBrains Mono", ui-monospace, monospace;
+  --ifm-font-family-monospace: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
   --ifm-font-size-base: 16px;
   --ifm-line-height-base: 1.75;
   --letter-spacing-base: -0.011em;
@@ -44,28 +44,33 @@
   --ifm-global-radius: 12px;
   --ifm-background-color: #ffffff;
   --ifm-background-surface-color: #ffffff;
-  --ifm-navbar-background-color: rgba(255, 255, 255, 0.8);
+  --ifm-navbar-background-color: rgba(255, 255, 255, 0.7);
   --ifm-color-content: var(--zinc-700);
   --ifm-heading-color: var(--zinc-950);
   --ifm-toc-border-color: var(--zinc-100);
 
   --ifm-code-background: var(--zinc-100);
-  --ifm-pre-background: var(--zinc-950);
-  /* Dark code blocks even in light mode for focus */
+  --ifm-pre-background: var(--zinc-50);
 
   --doc-sidebar-width: 280px !important;
+
+  /* Custom Elevations */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 [data-theme='dark'] {
   --brand-color: #818cf8;
-  --ifm-background-color: var(--zinc-950);
+  --ifm-background-color: #0c0c0e; /* Deep Zinc Black */
   --ifm-background-surface-color: var(--zinc-900);
-  --ifm-navbar-background-color: rgba(9, 9, 11, 0.8);
+  --ifm-navbar-background-color: rgba(12, 12, 14, 0.7);
   --ifm-color-content: var(--zinc-400);
   --ifm-heading-color: var(--zinc-50);
   --ifm-toc-border-color: var(--zinc-800);
   --ifm-pre-background: #000000;
-  --ifm-code-background: var(--zinc-800);
+  --ifm-code-background: #1e1e20;
 }
 
 /* ─── Global Reset & Body ─── */
@@ -76,12 +81,32 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Modern Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--zinc-300);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 10px;
+}
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: var(--zinc-700);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--zinc-400);
+}
+
 /* ─── Navbar ─── */
 .navbar {
   box-shadow: none;
   border-bottom: 1px solid var(--ifm-toc-border-color);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
 }
 
 .navbar__brand {
@@ -95,90 +120,145 @@ body {
 }
 
 .menu__link {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 500;
   border-radius: 8px;
   margin-bottom: 2px;
   padding: 0.6rem 0.8rem !important;
+  transition: all 0.2s ease;
+  color: var(--zinc-500);
+}
+
+.menu__link:hover {
+  background-color: var(--zinc-100);
+  color: var(--zinc-900);
+}
+
+[data-theme='dark'] .menu__link:hover {
+  background-color: var(--zinc-800);
+  color: var(--zinc-50);
 }
 
 .menu__link--active {
-  background-color: var(--brand-color) !important;
-  color: #fff !important;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+  background-color: var(--zinc-100) !important;
+  color: var(--brand-color) !important;
+  font-weight: 600;
+}
+
+[data-theme='dark'] .menu__link--active {
+  background-color: var(--zinc-800) !important;
 }
 
 /* ─── Typography (Post Content) ─── */
 .markdown {
-  max-width: 780px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
 .markdown h1 {
-  font-size: 3rem;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 900;
   letter-spacing: -0.05em;
   margin-bottom: 2.5rem;
   line-height: 1.1;
+  background: linear-gradient(to bottom right, var(--ifm-heading-color), var(--zinc-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Modern Heading Style: No border, just space and weight */
 .markdown h2 {
-  font-size: 1.85rem;
+  font-size: 1.875rem;
   font-weight: 800;
-  margin-top: 4rem;
-  margin-bottom: 1.25rem;
-  border-bottom: none;
-  /* Removed border as requested */
+  margin-top: 4.5rem;
+  margin-bottom: 1.5rem;
   letter-spacing: -0.03em;
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+}
+
+.markdown h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--ifm-toc-border-color);
+  margin-left: 1.5rem;
 }
 
 .markdown h3 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-top: 2.5rem;
+  margin-top: 3rem;
   letter-spacing: -0.02em;
 }
 
 .markdown p {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
   line-height: 1.8;
 }
 
-/* ─── Tables (Refined Tech Style) ─── */
+.markdown a {
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.markdown a:not(.pagination-nav__link):not(.menu__link)::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -1px;
+  left: 0;
+  background-color: var(--brand-color);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+
+.markdown a:not(.pagination-nav__link):not(.menu__link):hover {
+  color: var(--brand-color);
+}
+
+.markdown a:not(.pagination-nav__link):not(.menu__link):hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* ─── Tables (Astro Modern Style) ─── */
 .markdown table {
   display: table;
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 2.5rem 0;
+  border-collapse: collapse;
+  margin: 3rem 0;
   border: 1px solid var(--ifm-toc-border-color);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  background-color: var(--ifm-background-color);
+  box-shadow: var(--shadow-sm);
 }
 
 .markdown table th {
   background-color: var(--zinc-50);
   color: var(--zinc-900);
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.25rem;
   text-align: left;
-  padding: 1rem 1.25rem;
   border-bottom: 1px solid var(--ifm-toc-border-color);
-  border-right: none;
 }
 
 [data-theme='dark'] .markdown table th {
-  background-color: var(--zinc-900);
-  color: var(--zinc-50);
+  background-color: #161618;
+  color: var(--zinc-400);
 }
 
 .markdown table td {
   padding: 1rem 1.25rem;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   border-bottom: 1px solid var(--ifm-toc-border-color);
-  border-right: none;
   color: var(--ifm-color-content);
 }
 
@@ -186,43 +266,75 @@ body {
   border-bottom: none;
 }
 
+.markdown table tr:nth-child(even) {
+  background-color: rgba(250, 250, 250, 0.5);
+}
+
+[data-theme='dark'] .markdown table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
 .markdown table tr:hover td {
-  background-color: var(--zinc-50);
+  background-color: rgba(99, 102, 241, 0.03);
 }
 
-[data-theme='dark'] .markdown table tr:hover td {
-  background-color: rgba(255, 255, 255, 0.02);
+/* ─── Code Blocks (Studio/Vercel Style) ─── */
+.theme-code-block {
+  margin: 3rem 0 !important;
+  box-shadow: var(--shadow-lg) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  border: 1px solid var(--ifm-toc-border-color) !important;
 }
 
-/* ─── Code Blocks (Studio Style) ─── */
+[data-theme='dark'] .theme-code-block {
+  border-color: var(--zinc-800) !important;
+  box-shadow: var(--shadow-xl) !important;
+}
+
 .prism-code {
   position: relative;
-  border-radius: 14px;
-  margin: 2.5rem 0;
-  padding: 1.5rem !important;
-  font-size: 0.9rem;
-  border: 1px solid var(--zinc-800);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
-  background-color: #000 !important;
-  /* Always dark for that 'terminal' feel */
+  margin: 0 !important;
+  padding: 2.5rem 1.5rem 1.5rem !important;
+  font-size: 0.875rem !important;
+  background-color: var(--ifm-pre-background) !important;
 }
 
-/* Code block decoration - fake window controls */
-.prism-code::before {
+/* Fake Mac Window Controls */
+.theme-code-block::before {
   content: "";
   position: absolute;
-  top: 14px;
-  right: 18px;
-  width: 40px;
-  height: 8px;
-  background: radial-gradient(circle, #333 2px, transparent 2.5px);
-  background-size: 12px 8px;
-  opacity: 0.5;
+  top: 16px;
+  left: 18px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff5f56;
+  box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f;
+  z-index: 10;
+  opacity: 0.8;
+}
+
+/* Language Tag Styling */
+[class*='codeBlockTitle'] {
+  background-color: var(--ifm-pre-background) !important;
+  border-bottom: 1px solid var(--ifm-toc-border-color) !important;
+  color: var(--zinc-500) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+  padding-left: 5rem !important;
+}
+
+[data-theme='dark'] [class*='codeBlockTitle'] {
+  background-color: #111 !important;
+  border-bottom-color: #222 !important;
+  color: var(--zinc-400) !important;
 }
 
 code {
-  font-size: 0.85em;
-  padding: 0.2rem 0.45rem;
+  font-size: 0.875em;
+  padding: 0.2rem 0.4rem;
   border-radius: 6px;
   background-color: var(--ifm-code-background);
   border: 1px solid var(--ifm-toc-border-color);
@@ -231,22 +343,50 @@ code {
 
 [data-theme='dark'] code {
   color: var(--brand-color-light);
+  background-color: var(--zinc-800);
 }
 
 /* ─── Blockquotes ─── */
 .markdown blockquote {
-  border-left: 3px solid var(--brand-color);
-  background: var(--zinc-50);
+  border-left: 4px solid var(--brand-color);
+  background: linear-gradient(to right, var(--zinc-50), transparent);
   padding: 1.5rem 2rem;
   border-radius: 0 12px 12px 0;
-  margin: 2.5rem 0;
+  margin: 3rem 0;
   color: var(--zinc-600);
-  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 [data-theme='dark'] .markdown blockquote {
-  background: var(--zinc-900);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.03), transparent);
   color: var(--zinc-400);
+}
+
+/* ─── Admonitions ─── */
+.theme-admonition {
+  border-radius: 12px !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  padding: 1.25rem 1.5rem !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+/* ─── Table of Contents ─── */
+.table-of-contents {
+  font-size: 0.8rem !important;
+}
+
+.table-of-contents__link {
+  color: var(--zinc-500) !important;
+  border-left: 2px solid transparent;
+  padding-left: 1rem !important;
+  margin-left: -1px;
+}
+
+.table-of-contents__link--active {
+  color: var(--brand-color) !important;
+  border-left-color: var(--brand-color) !important;
+  font-weight: 600;
 }
 
 /* ─── Pagination ─── */
@@ -254,17 +394,44 @@ code {
   border-radius: 16px;
   padding: 1.5rem;
   border: 1px solid var(--ifm-toc-border-color);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: var(--ifm-background-color);
 }
 
 .pagination-nav__link:hover {
   border-color: var(--brand-color);
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(99, 102, 241, 0.15);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ─── Micro-Footer (Astro Minimal Style) ─── */
+.footer {
+  background-color: transparent !important;
+  border-top: 1px solid var(--ifm-toc-border-color);
+  padding: 4rem 1rem !important;
+}
+
+.footer__copyright {
+  font-size: 0.75rem !important;
+  color: var(--zinc-500) !important;
+  text-align: center !important;
+  font-family: var(--ifm-font-family-monospace);
+  letter-spacing: -0.01em;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.footer__copyright:hover {
+  opacity: 1;
+}
+
+/* Hide empty link container if links array is empty */
+.footer__links {
+  display: none !important;
 }
 
 /* ─── Custom Landing Utility ─── */
 .hero-gradient {
-  background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.1), transparent),
-    radial-gradient(circle at bottom left, rgba(129, 140, 248, 0.05), transparent);
+  background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.08), transparent),
+    radial-gradient(circle at bottom left, rgba(129, 140, 248, 0.04), transparent);
 }
