@@ -135,7 +135,7 @@ this.mockMvc.perform(get("/user"))
 ### snippets 연결 및 문서화
 생성된 snippets 파일들을 연결해줄 사용자 정의 .adoc파일을 "src/docs/aciidocs"경로에 생성하고 문서를 구성 한다.
 * snippets 파일 연결
-  * include::{snippets}/test-example/curl-request.adoc[]
+  * include::\{snippets\}/test-example/curl-request.adoc[]
   * Asciidoctor User Manual → https://docs.asciidoctor.org/asciidoctor/latest/
 * include로 각각의 파일 삽입하는 대신 operation으로 원하는 파일만 가져옴
 
